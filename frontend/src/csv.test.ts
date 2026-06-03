@@ -7,6 +7,7 @@ it("exports session results as csv", () => {
   const rows: ResultRow[] = [
     {
       wordId: "head",
+      corpusId: "english",
       word: "head",
       vowel: "eh",
       ipa: "/ɛ/",
@@ -22,5 +23,6 @@ it("exports session results as csv", () => {
     }
   ];
 
-  expect(sessionResultsToCsv(rows)).toContain("head,eh,/ɛ/,610,1900,,0.88,low_level");
+  expect(sessionResultsToCsv(rows)).toContain("english,head,eh,/ɛ/,610,1900,,0.88,low_level");
+  expect(sessionResultsToCsv(rows, "bark")).toContain("f1_bark");
 });

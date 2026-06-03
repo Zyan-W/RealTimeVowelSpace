@@ -1,21 +1,29 @@
-import type { ResultRow } from "./types";
+import type { DisplayUnit, ResultRow } from "./types";
+import { displayValue } from "./units";
 
-export function sessionResultsToCsv(results: ResultRow[]): string {
-  const header = ["word", "vowel", "ipa", "f1", "f2", "f3", "confidence", "warnings", "timestamp"];
+export function sessionResultsToCsv(results: ResultRow[], unit: DisplayUnit = "hz"): string {
+  const unitName = unit === "bark" ? "bark" : "hz";
+  const header = ["corpus", "word", "vowel", "ipa", `f1_${unitName}`, `f2_${unitName}`, `f3_${unitName}`, "confidence", "warnings", "timestamp"];
   const rows = results.map((row) =>
     [
+      row.corpusId,
       row.word,
       row.vowel,
       row.ipa,
-      row.f1 ?? "",
-      row.f2 ?? "",
-      row.f3 ?? "",
+      formatCsvNumber(displayValue(row.f1, unit)),
+      formatCsvNumber(displayValue(row.f2, unit)),
+      formatCsvNumber(displayValue(row.f3, unit)),
       row.confidence,
       row.warnings.join(";"),
       row.timestamp
     ].map(csvCell).join(",")
   );
   return [header.join(","), ...rows].join("\n");
+}
+
+function formatCsvNumber(value: number | null): string {
+  if (value == null) return "";
+  return Number(value.toFixed(3)).toString();
 }
 
 export function csvCell(value: string | number): string {

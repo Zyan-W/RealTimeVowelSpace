@@ -11,6 +11,11 @@ export type ReferenceRegion = {
   radiusF2: number;
 };
 
+export type ReferenceSet = {
+  id: string;
+  label: string;
+};
+
 export type CorpusToken = {
   id: string;
   word: string;
@@ -19,13 +24,16 @@ export type CorpusToken = {
   ipa: string;
   color: string;
   analysis: AnalysisHints;
-  reference: ReferenceRegion;
+  references: Record<string, ReferenceRegion>;
 };
 
 export type Corpus = {
+  id: string;
   version: string;
   language: string;
+  languageCode: string;
   description: string;
+  referenceSets: ReferenceSet[];
   tokens: CorpusToken[];
 };
 
@@ -47,7 +55,10 @@ export type AnalyzeResponse = {
 };
 
 export type ResultRow = AnalyzeResponse & {
+  corpusId: string;
   timestamp: string;
   color: string;
   ipa: string;
 };
+
+export type DisplayUnit = "hz" | "bark";

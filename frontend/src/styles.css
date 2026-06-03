@@ -72,6 +72,53 @@ button {
   gap: 8px;
 }
 
+.switch-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 22px repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  align-items: center;
+  background: #eef2ef;
+  border: 1px solid #d9ded6;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.segmented:has(button:only-of-type) {
+  grid-template-columns: 22px 1fr;
+}
+
+.segmented svg {
+  color: #506065;
+  justify-self: center;
+}
+
+.segmented button {
+  min-height: 34px;
+  border-radius: 6px;
+  background: transparent;
+  color: #506065;
+  cursor: pointer;
+  font-weight: 750;
+  padding: 0 8px;
+}
+
+.segmented button.active {
+  background: #ffffff;
+  color: #1d5967;
+  box-shadow: 0 2px 8px rgba(24, 36, 40, 0.09);
+}
+
+.segmented button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .word-count {
   color: #667174;
   font-weight: 700;
@@ -192,6 +239,13 @@ h1 {
   fill: #263235;
   font-size: 17px;
   font-weight: 800;
+}
+
+.speaker-polygon {
+  fill: rgba(29, 89, 103, 0.13);
+  stroke: #1d5967;
+  stroke-width: 2.4;
+  stroke-linejoin: round;
 }
 
 .result-point {

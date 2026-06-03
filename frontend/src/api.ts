@@ -1,5 +1,13 @@
 import type { AnalyzeResponse, Corpus, CorpusToken } from "./types";
 
+export async function fetchCorpora(): Promise<Corpus[]> {
+  const response = await fetch("/api/corpora");
+  if (!response.ok) {
+    throw new Error("Could not load the word lists.");
+  }
+  return response.json();
+}
+
 export async function fetchCorpus(): Promise<Corpus> {
   const response = await fetch("/api/corpus");
   if (!response.ok) {
@@ -8,8 +16,9 @@ export async function fetchCorpus(): Promise<Corpus> {
   return response.json();
 }
 
-export async function analyzeToken(token: CorpusToken, wavBlob: Blob): Promise<AnalyzeResponse> {
+export async function analyzeToken(corpus: Corpus, token: CorpusToken, wavBlob: Blob): Promise<AnalyzeResponse> {
   const body = new FormData();
+  body.append("corpus_id", corpus.id);
   body.append("word_id", token.id);
   body.append("vowel", token.vowel);
   body.append("audio", wavBlob, `${token.id}.wav`);

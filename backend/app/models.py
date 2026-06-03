@@ -16,6 +16,11 @@ class ReferenceRegion(BaseModel):
     radiusF2: float
 
 
+class ReferenceSet(BaseModel):
+    id: str
+    label: str
+
+
 class CorpusToken(BaseModel):
     id: str
     word: str
@@ -24,13 +29,16 @@ class CorpusToken(BaseModel):
     ipa: str
     color: str
     analysis: AnalysisHints
-    reference: ReferenceRegion
+    references: dict[str, ReferenceRegion]
 
 
 class Corpus(BaseModel):
+    id: str
     version: str
     language: str
+    languageCode: str
     description: str
+    referenceSets: list[ReferenceSet]
     tokens: list[CorpusToken]
 
 

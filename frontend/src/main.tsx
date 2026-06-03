@@ -1,18 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Mic, RotateCcw, SkipForward, Square, Download, Play } from "lucide-react";
+import { Download, Globe2, Mic, Play, RotateCcw, Ruler, SkipForward, Square, Users } from "lucide-react";
 
-import { analyzeToken, fetchCorpus } from "./api";
+import { analyzeToken, fetchCorpora } from "./api";
 import { WavRecorder } from "./audio";
 import { VowelChart } from "./components/VowelChart";
 import { sessionResultsToCsv } from "./csv";
-import type { Corpus, ResultRow } from "./types";
+import type { Corpus, DisplayUnit, ResultRow } from "./types";
+import { formatFormant, unitLabel } from "./units";
 import "./styles.css";
 
 type RecordingState = "idle" | "recording" | "analyzing";
 
 function App() {
-  const [corpus, setCorpus] = React.useState<Corpus | null>(null);
+  const [corpora, setCorpora] = React.useState<Corpus[]>([]);
+  const [activeCorpusId, setActiveCorpusId] = React.useState("english");
+  const [activeReferenceId, setActiveReferenceId] = React.useState("american");
+  const [unit, setUnit] = React.useState<DisplayUnit>("hz");
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [results, setResults] = React.useState<ResultRow[]>([]);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
@@ -21,20 +25,27 @@ function App() {
   const recorderRef = React.useRef<WavRecorder | null>(null);
 
   React.useEffect(() => {
-    fetchCorpus()
-      .then((nextCorpus) => {
-        setCorpus(nextCorpus);
+    fetchCorpora()
+      .then((nextCorpora) => {
+        setCorpora(nextCorpora);
+        const initialCorpus = nextCorpora.find((item) => item.id === activeCorpusId) ?? nextCorpora[0];
+        if (initialCorpus) {
+          setActiveCorpusId(initialCorpus.id);
+          setActiveReferenceId(initialCorpus.referenceSets[0]?.id ?? "");
+        }
         setMessage("Ready");
       })
       .catch((error: Error) => setMessage(error.message));
   }, []);
 
+  const corpus = corpora.find((item) => item.id === activeCorpusId) ?? corpora[0] ?? null;
   const token = corpus?.tokens[currentIndex] ?? null;
   const selectedResult = results.find((result) => result.wordId === selectedId) ?? results.at(-1) ?? null;
   const progress = corpus ? Math.round((results.length / corpus.tokens.length) * 100) : 0;
+  const activeReference = corpus?.referenceSets.find((item) => item.id === activeReferenceId) ?? corpus?.referenceSets[0] ?? null;
 
   async function startRecording() {
-    if (!token || state !== "idle") return;
+    if (!corpus || !token || state !== "idle") return;
     try {
       const recorder = new WavRecorder();
       await recorder.start();
@@ -47,7 +58,7 @@ function App() {
   }
 
   async function stopRecording() {
-    if (!token || state !== "recording" || !recorderRef.current) return;
+    if (!corpus || !token || state !== "recording" || !recorderRef.current) return;
     setState("analyzing");
     setMessage("Analyzing vowel...");
     try {
@@ -55,16 +66,17 @@ function App() {
       if (recording.duration < 0.25) {
         throw new Error("That clip was too short. Try holding the vowel a little longer.");
       }
-      const analysis = await analyzeToken(token, recording.blob);
+      const analysis = await analyzeToken(corpus, token, recording.blob);
       const row: ResultRow = {
         ...analysis,
+        corpusId: corpus.id,
         timestamp: new Date().toISOString(),
         color: token.color,
         ipa: token.ipa
       };
       setResults((existing) => [...existing.filter((item) => item.wordId !== row.wordId), row]);
       setSelectedId(row.wordId);
-      setMessage(`${token.display}: F1 ${analysis.f1?.toFixed(0)} Hz, F2 ${analysis.f2?.toFixed(0)} Hz`);
+      setMessage(`${token.display}: F1 ${formatFormant(analysis.f1, unit)}, F2 ${formatFormant(analysis.f2, unit)}`);
       setCurrentIndex((index) => Math.min(index + 1, (corpus?.tokens.length ?? 1) - 1));
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Analysis failed.");
@@ -88,7 +100,7 @@ function App() {
   }
 
   function exportCsv() {
-    const blob = new Blob([sessionResultsToCsv(results)], { type: "text/csv;charset=utf-8" });
+    const blob = new Blob([sessionResultsToCsv(results, unit)], { type: "text/csv;charset=utf-8" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "vowel-space-session.csv";
@@ -96,13 +108,65 @@ function App() {
     URL.revokeObjectURL(link.href);
   }
 
+  function changeCorpus(nextCorpusId: string) {
+    const nextCorpus = corpora.find((item) => item.id === nextCorpusId);
+    setActiveCorpusId(nextCorpusId);
+    setActiveReferenceId(nextCorpus?.referenceSets[0]?.id ?? "");
+    setCurrentIndex(0);
+    setResults([]);
+    setSelectedId(null);
+    setMessage("Ready");
+  }
+
   return (
     <main className="app-shell">
       <section className="workspace">
         <div className="prompt-panel">
           <div className="topline">
-            <span>English vowel space</span>
+            <span>{corpus?.language ?? "Vowel"} vowel space</span>
             <span>{corpus?.version ?? "v1"}</span>
+          </div>
+          <div className="switch-stack">
+            <div className="segmented" aria-label="Language">
+              <Globe2 size={16} />
+              {corpora.map((item) => (
+                <button
+                  key={item.id}
+                  className={item.id === corpus?.id ? "active" : ""}
+                  onClick={() => changeCorpus(item.id)}
+                  disabled={state !== "idle"}
+                >
+                  {item.language}
+                </button>
+              ))}
+            </div>
+            {corpus && corpus.referenceSets.length > 1 && (
+              <div className="segmented" aria-label="Reference accent">
+                <Users size={16} />
+                {corpus.referenceSets.map((item) => (
+                  <button
+                    key={item.id}
+                    className={item.id === activeReferenceId ? "active" : ""}
+                    onClick={() => setActiveReferenceId(item.id)}
+                    disabled={state !== "idle"}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="segmented" aria-label="Formant unit">
+              <Ruler size={16} />
+              {(["hz", "bark"] as DisplayUnit[]).map((nextUnit) => (
+                <button
+                  key={nextUnit}
+                  className={nextUnit === unit ? "active" : ""}
+                  onClick={() => setUnit(nextUnit)}
+                >
+                  {unitLabel(nextUnit)}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="word-zone">
             <span className="word-count">{corpus ? `${currentIndex + 1} / ${corpus.tokens.length}` : "..."}</span>
@@ -137,7 +201,14 @@ function App() {
           <p className={`status ${state}`}>{message}</p>
         </div>
 
-        <VowelChart corpus={corpus} results={results} selectedId={selectedId} onSelect={setSelectedId} />
+        <VowelChart
+          corpus={corpus}
+          results={results}
+          selectedId={selectedId}
+          activeReferenceId={activeReference?.id ?? ""}
+          unit={unit}
+          onSelect={setSelectedId}
+        />
 
         <aside className="result-panel">
           <div className="panel-heading">
@@ -151,15 +222,15 @@ function App() {
               <dl>
                 <div>
                   <dt>F1</dt>
-                  <dd>{selectedResult.f1?.toFixed(0)} Hz</dd>
+                  <dd>{formatFormant(selectedResult.f1, unit)}</dd>
                 </div>
                 <div>
                   <dt>F2</dt>
-                  <dd>{selectedResult.f2?.toFixed(0)} Hz</dd>
+                  <dd>{formatFormant(selectedResult.f2, unit)}</dd>
                 </div>
                 <div>
                   <dt>F3</dt>
-                  <dd>{selectedResult.f3 ? `${selectedResult.f3.toFixed(0)} Hz` : "n/a"}</dd>
+                  <dd>{formatFormant(selectedResult.f3, unit)}</dd>
                 </div>
                 <div>
                   <dt>Confidence</dt>
@@ -182,7 +253,7 @@ function App() {
               <button key={result.wordId} onClick={() => setSelectedId(result.wordId)}>
                 <span style={{ background: result.color }} />
                 {result.word}
-                <strong>{result.f1?.toFixed(0)} / {result.f2?.toFixed(0)}</strong>
+                <strong>{formatCompact(result.f1, unit)} / {formatCompact(result.f2, unit)}</strong>
               </button>
             ))}
           </div>
@@ -194,6 +265,11 @@ function App() {
 
 function formatWarning(warning: string): string {
   return warning.replaceAll("_", " ");
+}
+
+function formatCompact(value: number | null, unit: DisplayUnit): string {
+  if (value == null) return "n/a";
+  return unit === "bark" ? formatFormant(value, unit).replace(" Bark", "") : value.toFixed(0);
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(<App />);

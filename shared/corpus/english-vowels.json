@@ -1,7 +1,13 @@
 {
-  "version": "2026.06.v1",
+  "id": "english",
+  "version": "2026.06.v2",
   "language": "English",
-  "description": "Teaching word list for plotting English vowel space. Reference regions are pedagogical anchors, not universal targets.",
+  "languageCode": "en",
+  "description": "Monophthong teaching word list for plotting English vowel space. Reference regions are pedagogical anchors, not universal targets.",
+  "referenceSets": [
+    { "id": "american", "label": "American" },
+    { "id": "british", "label": "British" }
+  ],
   "tokens": [
     {
       "id": "heed",
@@ -11,7 +17,10 @@
       "ipa": "/i/",
       "color": "#2166ac",
       "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
-      "reference": { "f1": 300, "f2": 2500, "radiusF1": 80, "radiusF2": 260 }
+      "references": {
+        "american": { "f1": 300, "f2": 2500, "radiusF1": 80, "radiusF2": 260 },
+        "british": { "f1": 285, "f2": 2600, "radiusF1": 80, "radiusF2": 260 }
+      }
     },
     {
       "id": "hid",
@@ -21,17 +30,10 @@
       "ipa": "/ɪ/",
       "color": "#4393c3",
       "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
-      "reference": { "f1": 430, "f2": 2100, "radiusF1": 90, "radiusF2": 250 }
-    },
-    {
-      "id": "hayed",
-      "word": "hayed",
-      "display": "hayed",
-      "vowel": "e",
-      "ipa": "/eɪ/",
-      "color": "#92c5de",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
-      "reference": { "f1": 430, "f2": 2300, "radiusF1": 100, "radiusF2": 270 }
+      "references": {
+        "american": { "f1": 430, "f2": 2100, "radiusF1": 90, "radiusF2": 250 },
+        "british": { "f1": 390, "f2": 2200, "radiusF1": 90, "radiusF2": 250 }
+      }
     },
     {
       "id": "head",
@@ -41,7 +43,10 @@
       "ipa": "/ɛ/",
       "color": "#5aae61",
       "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
-      "reference": { "f1": 610, "f2": 1900, "radiusF1": 110, "radiusF2": 260 }
+      "references": {
+        "american": { "f1": 610, "f2": 1900, "radiusF1": 110, "radiusF2": 260 },
+        "british": { "f1": 560, "f2": 2000, "radiusF1": 110, "radiusF2": 260 }
+      }
     },
     {
       "id": "had",
@@ -51,7 +56,10 @@
       "ipa": "/æ/",
       "color": "#1b7837",
       "analysis": { "windowMs": 130, "maxFormantHz": 5500, "timeStep": 0.005 },
-      "reference": { "f1": 860, "f2": 1800, "radiusF1": 140, "radiusF2": 300 }
+      "references": {
+        "american": { "f1": 860, "f2": 1800, "radiusF1": 140, "radiusF2": 300 },
+        "british": { "f1": 740, "f2": 1900, "radiusF1": 130, "radiusF2": 280 }
+      }
     },
     {
       "id": "hod",
@@ -61,7 +69,10 @@
       "ipa": "/ɑ/",
       "color": "#d6604d",
       "analysis": { "windowMs": 130, "maxFormantHz": 5000, "timeStep": 0.005 },
-      "reference": { "f1": 730, "f2": 1100, "radiusF1": 130, "radiusF2": 260 }
+      "references": {
+        "american": { "f1": 730, "f2": 1100, "radiusF1": 130, "radiusF2": 260 },
+        "british": { "f1": 760, "f2": 1250, "radiusF1": 130, "radiusF2": 260 }
+      }
     },
     {
       "id": "hawed",
@@ -71,7 +82,10 @@
       "ipa": "/ɔ/",
       "color": "#f4a582",
       "analysis": { "windowMs": 130, "maxFormantHz": 5000, "timeStep": 0.005 },
-      "reference": { "f1": 570, "f2": 900, "radiusF1": 120, "radiusF2": 220 }
+      "references": {
+        "american": { "f1": 570, "f2": 900, "radiusF1": 120, "radiusF2": 220 },
+        "british": { "f1": 520, "f2": 950, "radiusF1": 110, "radiusF2": 220 }
+      }
     },
     {
       "id": "hood",
@@ -81,7 +95,10 @@
       "ipa": "/ʊ/",
       "color": "#b2182b",
       "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
-      "reference": { "f1": 460, "f2": 1100, "radiusF1": 90, "radiusF2": 230 }
+      "references": {
+        "american": { "f1": 460, "f2": 1100, "radiusF1": 90, "radiusF2": 230 },
+        "british": { "f1": 430, "f2": 1250, "radiusF1": 90, "radiusF2": 240 }
+      }
     },
     {
       "id": "who'd",
@@ -91,7 +108,10 @@
       "ipa": "/u/",
       "color": "#762a83",
       "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
-      "reference": { "f1": 350, "f2": 900, "radiusF1": 80, "radiusF2": 230 }
+      "references": {
+        "american": { "f1": 350, "f2": 900, "radiusF1": 80, "radiusF2": 230 },
+        "british": { "f1": 320, "f2": 950, "radiusF1": 80, "radiusF2": 230 }
+      }
     },
     {
       "id": "hud",
@@ -101,7 +121,10 @@
       "ipa": "/ʌ/",
       "color": "#9970ab",
       "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
-      "reference": { "f1": 640, "f2": 1200, "radiusF1": 120, "radiusF2": 260 }
+      "references": {
+        "american": { "f1": 640, "f2": 1200, "radiusF1": 120, "radiusF2": 260 },
+        "british": { "f1": 600, "f2": 1300, "radiusF1": 120, "radiusF2": 260 }
+      }
     }
   ]
 }

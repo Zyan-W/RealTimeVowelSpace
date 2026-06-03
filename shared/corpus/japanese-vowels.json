@@ -1,0 +1,72 @@
+{
+  "id": "japanese",
+  "version": "2026.06.v1",
+  "language": "Japanese",
+  "languageCode": "ja",
+  "description": "Five-vowel Japanese teaching word list for plotting vowel space. Reference regions are pedagogical anchors, not universal targets.",
+  "referenceSets": [
+    { "id": "native", "label": "Native speaker" }
+  ],
+  "tokens": [
+    {
+      "id": "a",
+      "word": "あ",
+      "display": "あ",
+      "vowel": "a",
+      "ipa": "/a/",
+      "color": "#d6604d",
+      "analysis": { "windowMs": 130, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "references": {
+        "native": { "f1": 760, "f2": 1350, "radiusF1": 120, "radiusF2": 250 }
+      }
+    },
+    {
+      "id": "i",
+      "word": "い",
+      "display": "い",
+      "vowel": "i",
+      "ipa": "/i/",
+      "color": "#2166ac",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "references": {
+        "native": { "f1": 300, "f2": 2450, "radiusF1": 80, "radiusF2": 260 }
+      }
+    },
+    {
+      "id": "u",
+      "word": "う",
+      "display": "う",
+      "vowel": "u",
+      "ipa": "/ɯ/",
+      "color": "#762a83",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "references": {
+        "native": { "f1": 350, "f2": 1500, "radiusF1": 90, "radiusF2": 300 }
+      }
+    },
+    {
+      "id": "e",
+      "word": "え",
+      "display": "え",
+      "vowel": "e",
+      "ipa": "/e/",
+      "color": "#5aae61",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "references": {
+        "native": { "f1": 500, "f2": 2100, "radiusF1": 100, "radiusF2": 260 }
+      }
+    },
+    {
+      "id": "o",
+      "word": "お",
+      "display": "お",
+      "vowel": "o",
+      "ipa": "/o/",
+      "color": "#f4a582",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "references": {
+        "native": { "f1": 500, "f2": 950, "radiusF1": 100, "radiusF2": 220 }
+      }
+    }
+  ]
+}

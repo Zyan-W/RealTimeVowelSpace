@@ -7,3 +7,11 @@
 - Technical direction: React/Vite frontend records WAV in-browser; FastAPI backend uses Praat/Parselmouth and discards uploaded audio after analysis.
 - Privacy default: no server-side retention of audio or session results.
 - V1 analysis approach: trim silence, choose a stable central voiced/energy window, calculate median formants, return warnings for low-quality input.
+
+## 2026-06-03 V2
+
+- Added English reference-set switching for American and British accent anchors.
+- Added Hz/Bark display conversion for chart axes, reference regions, recorded values, and CSV export.
+- Removed the English diphthong token `hayed`.
+- Added a recorded-speaker vowel-space polygon that connects measured points in corpus order.
+- Added a Japanese five-vowel corpus and a language switch between English and Japanese.

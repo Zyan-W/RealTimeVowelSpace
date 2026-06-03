@@ -17,4 +17,12 @@ def test_corpus_endpoint_shape():
     body = response.json()
     assert body["language"] == "English"
     assert body["tokens"][0]["word"]
-    assert body["tokens"][0]["reference"]["f1"]
+    assert body["tokens"][0]["references"]["american"]["f1"]
+
+
+def test_corpora_endpoint_returns_english_and_japanese():
+    client = TestClient(app)
+    response = client.get("/api/corpora")
+    assert response.status_code == 200
+    corpus_ids = {item["id"] for item in response.json()}
+    assert {"english", "japanese"} <= corpus_ids

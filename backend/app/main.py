@@ -4,7 +4,7 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from .analyzer import AnalysisError, analyze_audio_bytes
-from .corpus import get_token, load_corpus
+from .corpus import DEFAULT_CORPUS_ID, get_token, load_corpora, load_corpus
 from .models import AnalyzeResponse, Corpus
 
 
@@ -36,16 +36,30 @@ def corpus() -> Corpus:
     return load_corpus()
 
 
+@app.get("/api/corpora", response_model=list[Corpus])
+def corpora() -> list[Corpus]:
+    return list(load_corpora().values())
+
+
+@app.get("/api/corpus/{corpus_id}", response_model=Corpus)
+def corpus_by_id(corpus_id: str) -> Corpus:
+    try:
+        return load_corpus(corpus_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=f"Unknown corpus id: {corpus_id}") from exc
+
+
 @app.post("/api/analyze-token", response_model=AnalyzeResponse)
 async def analyze_token(
+    corpus_id: str = Form(DEFAULT_CORPUS_ID),
     word_id: str = Form(...),
     vowel: str = Form(...),
     audio: UploadFile = File(...),
 ) -> AnalyzeResponse:
     try:
-        token = get_token(word_id)
+        token = get_token(corpus_id, word_id)
     except KeyError as exc:
-        raise HTTPException(status_code=404, detail=f"Unknown word id: {word_id}") from exc
+        raise HTTPException(status_code=404, detail=f"Unknown token: {corpus_id}/{word_id}") from exc
 
     if token.vowel != vowel:
         raise HTTPException(status_code=400, detail="Submitted vowel does not match the configured token.")
