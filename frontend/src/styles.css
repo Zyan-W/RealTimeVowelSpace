@@ -79,8 +79,7 @@ button {
 }
 
 .segmented {
-  display: grid;
-  grid-template-columns: 22px repeat(2, minmax(0, 1fr));
+  display: flex;
   gap: 6px;
   align-items: center;
   background: #eef2ef;
@@ -89,16 +88,14 @@ button {
   padding: 6px;
 }
 
-.segmented:has(button:only-of-type) {
-  grid-template-columns: 22px 1fr;
-}
-
 .segmented svg {
+  flex: 0 0 22px;
   color: #506065;
-  justify-self: center;
 }
 
 .segmented button {
+  flex: 1 1 0;
+  min-width: 0;
   min-height: 34px;
   border-radius: 6px;
   background: transparent;

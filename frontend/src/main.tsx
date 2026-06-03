@@ -14,7 +14,7 @@ type RecordingState = "idle" | "recording" | "analyzing";
 
 function App() {
   const [corpora, setCorpora] = React.useState<Corpus[]>([]);
-  const [activeCorpusId, setActiveCorpusId] = React.useState("english");
+  const [activeCorpusId, setActiveCorpusId] = React.useState("american-english");
   const [activeReferenceId, setActiveReferenceId] = React.useState("american");
   const [unit, setUnit] = React.useState<DisplayUnit>("hz");
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -136,7 +136,7 @@ function App() {
                   onClick={() => changeCorpus(item.id)}
                   disabled={state !== "idle"}
                 >
-                  {item.language}
+                  {corpusButtonLabel(item)}
                 </button>
               ))}
             </div>
@@ -265,6 +265,10 @@ function App() {
 
 function formatWarning(warning: string): string {
   return warning.replaceAll("_", " ");
+}
+
+function corpusButtonLabel(corpus: Corpus): string {
+  return corpus.language.replace(" English", "");
 }
 
 function formatCompact(value: number | null, unit: DisplayUnit): string {

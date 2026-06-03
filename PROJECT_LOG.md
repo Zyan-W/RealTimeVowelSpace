@@ -34,3 +34,10 @@
 - Replaced fragile multi-window startup with a Python launcher that starts, checks, opens, and stops backend/frontend as one managed process group.
 - Launcher now chooses free backend/frontend ports automatically, passes the selected backend port into Vite's proxy, and verifies `/api/corpora` through the frontend before opening the browser.
 - Added root `pytest.ini` so backend tests can be run from the repository root.
+
+## 2026-06-03 Accent Systems
+
+- Replaced the single English corpus plus American/British reference toggle with separate `american-english` and `british-english` corpora.
+- American English keeps a General American teaching set including LOT-PALM and r-colored NURSE anchors.
+- British English uses a Standard Southern British / RP-style stressed monophthong set that keeps LOT, BATH-PALM-START, THOUGHT, and NURSE as distinct anchors.
+- Speaker polygon now waits until every token in the selected corpus has a measured point, then connects the points by geometric angle around their center instead of corpus order.

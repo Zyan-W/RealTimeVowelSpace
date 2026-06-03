@@ -21,27 +21,26 @@ If the launcher says Python was not found, install Python 3.12 or newer and open
 ## What the Tool Does
 
 - Shows one word or kana prompt at a time.
-- Supports English and Japanese vowel-space tasks.
-- Switches English reference regions between American and British accent anchors.
+- Supports American English, British English, and Japanese vowel-space tasks.
+- Treats American English and British English as separate vowel systems with separate word lists and reference regions.
 - Switches formant displays between Hz and Bark.
 - Records a short WAV clip in the browser.
 - Sends the clip to a FastAPI backend at `POST /api/analyze-token`.
 - Uses Praat/Parselmouth to estimate formants from the stable central vowel region.
 - Plots each result on an inverted F1/F2 vowel chart.
-- Connects recorded vowel points into a speaker vowel-space polygon when at least three vowels have been measured.
+- Connects recorded vowel points into a speaker vowel-space polygon after the full current word list has been measured.
 - Keeps results in the browser session only and offers CSV export.
 - Does not store uploaded audio on the server.
 
 ## Using the Page
 
-1. Choose `English` or `Japanese`.
-2. For English, choose `American` or `British` reference data.
-3. Choose `Hz` or `Bark`.
-4. Click `Record`, say the displayed token, then click `Stop`.
-5. Continue through the list. After three measured vowels, the speaker vowel-space polygon appears.
-6. Use the download button to export the session CSV.
+1. Choose `American`, `British`, or `Japanese`.
+2. Choose `Hz` or `Bark`.
+3. Click `Record`, say the displayed token, then click `Stop`.
+4. Continue through the list. Once every token in the chosen system has been measured, the speaker vowel-space polygon appears.
+5. Use the download button to export the session CSV.
 
-Switching language clears the current session so English and Japanese measurements do not mix.
+Switching systems clears the current session so American English, British English, and Japanese measurements do not mix.
 
 ## Project Layout
 
@@ -89,9 +88,19 @@ This first version is for teaching demonstrations, not publication-grade phoneti
 
 Reference regions on the chart are pedagogical anchors. They are not universal pronunciation targets.
 
-## V2 Controls
+## Corpus Notes
 
-- Language: English or Japanese.
-- Reference: American/British for English; native-speaker reference for Japanese.
+The English systems are separated by lexical-set behavior rather than by reusing one word list with two reference overlays. Wells-style lexical sets distinguish, for example, RP LOT from General American LOT-PALM, and RP BATH-PALM-START from General American TRAP-BATH. British reference anchors use Standard Southern British / RP-style stressed monophthongs, while American anchors remain broad teaching targets because low vowels and back vowels vary strongly by region.
+
+Useful background sources:
+
+- Wells lexical sets summary: https://teflpedia.com/Vowel_set
+- RP vowel chart explanation: https://www.uv.es/anglotic/accents_of_english/01/jc_wells_vowel_chart.html
+- Deterding 1997 Standard Southern British monophthong formants: https://cir.nii.ac.jp/crid/1362825896085142912?lang=en
+- Clopper, Pisoni, and de Jong 2005 on regional American vowel variation: https://pmc.ncbi.nlm.nih.gov/articles/PMC3432912/
+
+## Current Controls
+
+- System: American English, British English, or Japanese.
 - Unit: Hz or Bark. Both recorded formants and reference regions are converted for display and CSV export.
-- Polygon: recorded points are connected in corpus order so the speaker's vowel-space shape can be inspected.
+- Polygon: after the full selected word list is recorded, measured points are sorted around their center and connected into a closed speaker vowel-space shape.

@@ -32,7 +32,7 @@ def test_analyze_synthetic_vowel_like_wav(tmp_path: Path):
         handle.setframerate(sample_rate)
         handle.writeframes(pcm.tobytes())
 
-    result = analyze_audio_file(wav_path, get_token("english", "hud"))
+    result = analyze_audio_file(wav_path, get_token("american-english", "hud"))
 
     assert result.f1 is not None
     assert result.f2 is not None

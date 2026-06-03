@@ -9,7 +9,7 @@ from .models import Corpus, CorpusToken
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 CORPUS_DIR = ROOT_DIR / "shared" / "corpus"
-DEFAULT_CORPUS_ID = "english"
+DEFAULT_CORPUS_ID = "american-english"
 
 
 @lru_cache(maxsize=1)

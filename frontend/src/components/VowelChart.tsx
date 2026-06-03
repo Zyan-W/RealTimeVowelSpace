@@ -39,6 +39,28 @@ const SCALES = {
   yTicks: number[];
 }>;
 
+type ChartPoint = {
+  id: string;
+  x: number;
+  y: number;
+};
+
+export function orderPointsClockwise<T extends ChartPoint>(points: T[]): T[] {
+  if (points.length < 3) return [...points];
+  const center = points.reduce(
+    (total, point) => ({
+      x: total.x + point.x / points.length,
+      y: total.y + point.y / points.length
+    }),
+    { x: 0, y: 0 }
+  );
+  return [...points].sort((a, b) => {
+    const angleA = Math.atan2(a.y - center.y, a.x - center.x);
+    const angleB = Math.atan2(b.y - center.y, b.x - center.x);
+    return angleA - angleB;
+  });
+}
+
 export function VowelChart({ corpus, results, selectedId, activeReferenceId, unit, onSelect }: Props) {
   const scale = SCALES[unit];
   const x = (f2: number) => PAD + ((scale.f2Max - f2) / (scale.f2Max - scale.f2Min)) * (WIDTH - PAD * 2);
@@ -46,13 +68,17 @@ export function VowelChart({ corpus, results, selectedId, activeReferenceId, uni
   const orderedResults = corpus?.tokens
     .map((token) => results.find((result) => result.wordId === token.id))
     .filter((result): result is ResultRow => result?.f1 != null && result?.f2 != null) ?? [];
-  const polygonPoints = orderedResults
-    .map((result) => {
+  const measuredPoints = orderedResults
+    .map((result): ChartPoint | null => {
       const f1 = displayValue(result.f1, unit);
       const f2 = displayValue(result.f2, unit);
-      return f1 == null || f2 == null ? null : `${x(f2)},${y(f1)}`;
+      return f1 == null || f2 == null ? null : { id: result.wordId, x: x(f2), y: y(f1) };
     })
-    .filter((point): point is string => Boolean(point));
+    .filter((point): point is ChartPoint => Boolean(point));
+  const isCompleteVowelSpace = Boolean(corpus && measuredPoints.length === corpus.tokens.length);
+  const polygonPoints = isCompleteVowelSpace
+    ? orderPointsClockwise(measuredPoints).map((point) => `${point.x},${point.y}`)
+    : [];
 
   return (
     <section className="chart-panel" aria-label="Vowel space chart">

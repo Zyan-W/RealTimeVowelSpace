@@ -1,17 +1,13 @@
 {
-  "id": "english",
-  "version": "2026.06.v2",
-  "language": "English",
-  "languageCode": "en",
-  "description": "Monophthong teaching word list for plotting English vowel space. Reference regions are pedagogical anchors, not universal targets.",
+  "id": "american-english",
+  "version": "2026.06.v3",
+  "language": "American English",
+  "languageCode": "en-US",
+  "description": "General American teaching word list for stressed vowel-space plotting. The low-back vowels vary regionally, so reference regions are pedagogical anchors rather than universal targets.",
   "referenceSets": [
     {
       "id": "american",
       "label": "American"
-    },
-    {
-      "id": "british",
-      "label": "British"
     }
   ],
   "tokens": [
@@ -19,7 +15,7 @@
       "id": "heed",
       "word": "heed",
       "display": "heed",
-      "vowel": "i",
+      "vowel": "FLEECE",
       "ipa": "/i/",
       "color": "#2166ac",
       "analysis": {
@@ -33,12 +29,6 @@
           "f2": 2500,
           "radiusF1": 80,
           "radiusF2": 260
-        },
-        "british": {
-          "f1": 285,
-          "f2": 2600,
-          "radiusF1": 80,
-          "radiusF2": 260
         }
       }
     },
@@ -46,7 +36,7 @@
       "id": "hid",
       "word": "hid",
       "display": "hid",
-      "vowel": "ih",
+      "vowel": "KIT",
       "ipa": "/\u026a/",
       "color": "#4393c3",
       "analysis": {
@@ -60,12 +50,6 @@
           "f2": 2100,
           "radiusF1": 90,
           "radiusF2": 250
-        },
-        "british": {
-          "f1": 390,
-          "f2": 2200,
-          "radiusF1": 90,
-          "radiusF2": 250
         }
       }
     },
@@ -73,7 +57,7 @@
       "id": "head",
       "word": "head",
       "display": "head",
-      "vowel": "eh",
+      "vowel": "DRESS",
       "ipa": "/\u025b/",
       "color": "#5aae61",
       "analysis": {
@@ -87,12 +71,6 @@
           "f2": 1900,
           "radiusF1": 110,
           "radiusF2": 260
-        },
-        "british": {
-          "f1": 560,
-          "f2": 2000,
-          "radiusF1": 110,
-          "radiusF2": 260
         }
       }
     },
@@ -100,7 +78,7 @@
       "id": "had",
       "word": "had",
       "display": "had",
-      "vowel": "ae",
+      "vowel": "TRAP",
       "ipa": "/\u00e6/",
       "color": "#1b7837",
       "analysis": {
@@ -114,12 +92,6 @@
           "f2": 1800,
           "radiusF1": 140,
           "radiusF2": 300
-        },
-        "british": {
-          "f1": 740,
-          "f2": 1900,
-          "radiusF1": 130,
-          "radiusF2": 280
         }
       }
     },
@@ -127,7 +99,7 @@
       "id": "hod",
       "word": "hod",
       "display": "hod",
-      "vowel": "aa",
+      "vowel": "LOT-PALM",
       "ipa": "/\u0251/",
       "color": "#d6604d",
       "analysis": {
@@ -141,12 +113,6 @@
           "f2": 1100,
           "radiusF1": 130,
           "radiusF2": 260
-        },
-        "british": {
-          "f1": 760,
-          "f2": 1250,
-          "radiusF1": 130,
-          "radiusF2": 260
         }
       }
     },
@@ -154,7 +120,7 @@
       "id": "hawed",
       "word": "hawed",
       "display": "hawed",
-      "vowel": "aw",
+      "vowel": "THOUGHT",
       "ipa": "/\u0254/",
       "color": "#f4a582",
       "analysis": {
@@ -168,12 +134,6 @@
           "f2": 900,
           "radiusF1": 120,
           "radiusF2": 220
-        },
-        "british": {
-          "f1": 520,
-          "f2": 950,
-          "radiusF1": 110,
-          "radiusF2": 220
         }
       }
     },
@@ -181,7 +141,7 @@
       "id": "hood",
       "word": "hood",
       "display": "hood",
-      "vowel": "uh",
+      "vowel": "FOOT",
       "ipa": "/\u028a/",
       "color": "#b2182b",
       "analysis": {
@@ -195,20 +155,14 @@
           "f2": 1100,
           "radiusF1": 90,
           "radiusF2": 230
-        },
-        "british": {
-          "f1": 430,
-          "f2": 1250,
-          "radiusF1": 90,
-          "radiusF2": 240
         }
       }
     },
     {
-      "id": "who'd",
+      "id": "whod",
       "word": "who'd",
       "display": "who'd",
-      "vowel": "u",
+      "vowel": "GOOSE",
       "ipa": "/u/",
       "color": "#762a83",
       "analysis": {
@@ -222,12 +176,6 @@
           "f2": 900,
           "radiusF1": 80,
           "radiusF2": 230
-        },
-        "british": {
-          "f1": 320,
-          "f2": 950,
-          "radiusF1": 80,
-          "radiusF2": 230
         }
       }
     },
@@ -235,7 +183,7 @@
       "id": "hud",
       "word": "hud",
       "display": "hud",
-      "vowel": "\u028c",
+      "vowel": "STRUT",
       "ipa": "/\u028c/",
       "color": "#9970ab",
       "analysis": {
@@ -249,10 +197,25 @@
           "f2": 1200,
           "radiusF1": 120,
           "radiusF2": 260
-        },
-        "british": {
-          "f1": 600,
-          "f2": 1300,
+        }
+      }
+    },
+    {
+      "id": "heard",
+      "word": "heard",
+      "display": "heard",
+      "vowel": "NURSE",
+      "ipa": "/\u025d/",
+      "color": "#bf812d",
+      "analysis": {
+        "windowMs": 140,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "american": {
+          "f1": 500,
+          "f2": 1500,
           "radiusF1": 120,
           "radiusF2": 260
         }

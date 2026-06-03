@@ -1,0 +1,246 @@
+{
+  "id": "british-english",
+  "version": "2026.06.v3",
+  "language": "British English",
+  "languageCode": "en-GB",
+  "description": "Standard Southern British / RP teaching word list for stressed monophthong vowel-space plotting. Reference regions are pedagogical anchors rather than universal targets.",
+  "referenceSets": [
+    {
+      "id": "british",
+      "label": "British"
+    }
+  ],
+  "tokens": [
+    {
+      "id": "heed",
+      "word": "heed",
+      "display": "heed",
+      "vowel": "FLEECE",
+      "ipa": "/i\u02d0/",
+      "color": "#2166ac",
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 292,
+          "f2": 2452,
+          "radiusF1": 90,
+          "radiusF2": 300
+        }
+      }
+    },
+    {
+      "id": "hid",
+      "word": "hid",
+      "display": "hid",
+      "vowel": "KIT",
+      "ipa": "/\u026a/",
+      "color": "#4393c3",
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 376,
+          "f2": 1966,
+          "radiusF1": 100,
+          "radiusF2": 280
+        }
+      }
+    },
+    {
+      "id": "head",
+      "word": "head",
+      "display": "head",
+      "vowel": "DRESS",
+      "ipa": "/e/",
+      "color": "#5aae61",
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 607,
+          "f2": 1857,
+          "radiusF1": 140,
+          "radiusF2": 300
+        }
+      }
+    },
+    {
+      "id": "had",
+      "word": "had",
+      "display": "had",
+      "vowel": "TRAP",
+      "ipa": "/\u00e6/",
+      "color": "#1b7837",
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 854,
+          "f2": 1675,
+          "radiusF1": 150,
+          "radiusF2": 320
+        }
+      }
+    },
+    {
+      "id": "hard",
+      "word": "hard",
+      "display": "hard",
+      "vowel": "BATH-PALM-START",
+      "ipa": "/\u0251\u02d0/",
+      "color": "#d6604d",
+      "analysis": {
+        "windowMs": 150,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 778,
+          "f2": 1236,
+          "radiusF1": 150,
+          "radiusF2": 270
+        }
+      }
+    },
+    {
+      "id": "hod",
+      "word": "hod",
+      "display": "hod",
+      "vowel": "LOT",
+      "ipa": "/\u0252/",
+      "color": "#8c510a",
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 655,
+          "f2": 1131,
+          "radiusF1": 130,
+          "radiusF2": 260
+        }
+      }
+    },
+    {
+      "id": "hawed",
+      "word": "hawed",
+      "display": "hawed",
+      "vowel": "THOUGHT-NORTH-FORCE",
+      "ipa": "/\u0254\u02d0/",
+      "color": "#f4a582",
+      "analysis": {
+        "windowMs": 150,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 402,
+          "f2": 858,
+          "radiusF1": 120,
+          "radiusF2": 240
+        }
+      }
+    },
+    {
+      "id": "hood",
+      "word": "hood",
+      "display": "hood",
+      "vowel": "FOOT",
+      "ipa": "/\u028a/",
+      "color": "#b2182b",
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 395,
+          "f2": 1257,
+          "radiusF1": 100,
+          "radiusF2": 260
+        }
+      }
+    },
+    {
+      "id": "whod",
+      "word": "who'd",
+      "display": "who'd",
+      "vowel": "GOOSE",
+      "ipa": "/u\u02d0/",
+      "color": "#762a83",
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 322,
+          "f2": 1314,
+          "radiusF1": 90,
+          "radiusF2": 280
+        }
+      }
+    },
+    {
+      "id": "hud",
+      "word": "hud",
+      "display": "hud",
+      "vowel": "STRUT",
+      "ipa": "/\u028c/",
+      "color": "#9970ab",
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 779,
+          "f2": 1359,
+          "radiusF1": 150,
+          "radiusF2": 300
+        }
+      }
+    },
+    {
+      "id": "heard",
+      "word": "heard",
+      "display": "heard",
+      "vowel": "NURSE",
+      "ipa": "/\u025c\u02d0/",
+      "color": "#bf812d",
+      "analysis": {
+        "windowMs": 150,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
+      "references": {
+        "british": {
+          "f1": 542,
+          "f2": 1566,
+          "radiusF1": 130,
+          "radiusF2": 300
+        }
+      }
+    }
+  ]
+}
