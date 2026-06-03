@@ -1,0 +1,107 @@
+{
+  "version": "2026.06.v1",
+  "language": "English",
+  "description": "Teaching word list for plotting English vowel space. Reference regions are pedagogical anchors, not universal targets.",
+  "tokens": [
+    {
+      "id": "heed",
+      "word": "heed",
+      "display": "heed",
+      "vowel": "i",
+      "ipa": "/i/",
+      "color": "#2166ac",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "reference": { "f1": 300, "f2": 2500, "radiusF1": 80, "radiusF2": 260 }
+    },
+    {
+      "id": "hid",
+      "word": "hid",
+      "display": "hid",
+      "vowel": "ih",
+      "ipa": "/ɪ/",
+      "color": "#4393c3",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "reference": { "f1": 430, "f2": 2100, "radiusF1": 90, "radiusF2": 250 }
+    },
+    {
+      "id": "hayed",
+      "word": "hayed",
+      "display": "hayed",
+      "vowel": "e",
+      "ipa": "/eɪ/",
+      "color": "#92c5de",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "reference": { "f1": 430, "f2": 2300, "radiusF1": 100, "radiusF2": 270 }
+    },
+    {
+      "id": "head",
+      "word": "head",
+      "display": "head",
+      "vowel": "eh",
+      "ipa": "/ɛ/",
+      "color": "#5aae61",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "reference": { "f1": 610, "f2": 1900, "radiusF1": 110, "radiusF2": 260 }
+    },
+    {
+      "id": "had",
+      "word": "had",
+      "display": "had",
+      "vowel": "ae",
+      "ipa": "/æ/",
+      "color": "#1b7837",
+      "analysis": { "windowMs": 130, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "reference": { "f1": 860, "f2": 1800, "radiusF1": 140, "radiusF2": 300 }
+    },
+    {
+      "id": "hod",
+      "word": "hod",
+      "display": "hod",
+      "vowel": "aa",
+      "ipa": "/ɑ/",
+      "color": "#d6604d",
+      "analysis": { "windowMs": 130, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "reference": { "f1": 730, "f2": 1100, "radiusF1": 130, "radiusF2": 260 }
+    },
+    {
+      "id": "hawed",
+      "word": "hawed",
+      "display": "hawed",
+      "vowel": "aw",
+      "ipa": "/ɔ/",
+      "color": "#f4a582",
+      "analysis": { "windowMs": 130, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "reference": { "f1": 570, "f2": 900, "radiusF1": 120, "radiusF2": 220 }
+    },
+    {
+      "id": "hood",
+      "word": "hood",
+      "display": "hood",
+      "vowel": "uh",
+      "ipa": "/ʊ/",
+      "color": "#b2182b",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "reference": { "f1": 460, "f2": 1100, "radiusF1": 90, "radiusF2": 230 }
+    },
+    {
+      "id": "who'd",
+      "word": "who'd",
+      "display": "who'd",
+      "vowel": "u",
+      "ipa": "/u/",
+      "color": "#762a83",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "reference": { "f1": 350, "f2": 900, "radiusF1": 80, "radiusF2": 230 }
+    },
+    {
+      "id": "hud",
+      "word": "hud",
+      "display": "hud",
+      "vowel": "ʌ",
+      "ipa": "/ʌ/",
+      "color": "#9970ab",
+      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "reference": { "f1": 640, "f2": 1200, "radiusF1": 120, "radiusF2": 260 }
+    }
+  ]
+}
