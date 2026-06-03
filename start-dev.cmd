@@ -58,7 +58,7 @@ if not exist "%FRONTEND_DIR%\node_modules" (
 
 echo.
 echo Starting backend and frontend in two new windows...
-start "RealTimeVowelSpace backend" cmd /k "chcp 65001 >nul && cd /d ""%BACKEND_DIR%"" && set PYTHONUTF8=1 && set PYTHONIOENCODING=utf-8 && ""%BACKEND_PY%"" -m uvicorn app.main:app --reload --port 8000"
+start "RealTimeVowelSpace backend" cmd /k "chcp 65001 >nul && cd /d ""%BACKEND_DIR%"" && ""%BACKEND_PY%"" -m uvicorn app.main:app --reload --port 8000"
 start "RealTimeVowelSpace frontend" cmd /k "cd /d ""%FRONTEND_DIR%"" && npm.cmd run dev"
 
 echo.
