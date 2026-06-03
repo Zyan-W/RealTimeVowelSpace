@@ -64,3 +64,8 @@
 - Moved shared launcher preparation into `scripts/bootstrap_dev.py` so Windows and macOS startup do not duplicate venv, pip, npm, and dependency-install logic.
 - Kept `start-dev.cmd` as a thin Windows entrypoint and `scripts/dev_launcher.py` as the shared backend/frontend process manager.
 - Removed old Windows-only `run-backend.cmd` and `run-frontend.cmd` helpers because the unified launcher supersedes them.
+
+## 2026-06-04 README Localization
+
+- Rewrote `README.md` as a bilingual Japanese-then-English user guide.
+- README now focuses on project functionality, a concise implementation overview, GitHub download options, prerequisites, and Windows/macOS usage via `start-dev.cmd` and `start-dev.sh`.

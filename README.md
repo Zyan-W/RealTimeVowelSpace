@@ -1,141 +1,161 @@
 # RealTimeVowelSpace
 
-A public teaching demo for recording fixed vowel tokens, extracting F1/F2 with a Praat-backed Python API, and plotting the results immediately in vowel space.
+## 日本語
 
-## Quick Start
+RealTimeVowelSpace は、母音空間を授業・デモ用に可視化するための Web ツールです。ブラウザで単語または仮名を 1 つずつ読み上げると、録音された音声から F1/F2/F3 を抽出し、結果をすぐに母音図に表示します。
 
-On Windows:
+### 主な機能
 
-1. Double-click `start-dev.cmd` in the project folder.
-2. Wait until the launcher prints `RealTimeVowelSpace is ready`.
-3. Use the browser page that the launcher opens.
+- American English、British English、日本語の母音課題に対応しています。
+- 各トークンを録音すると、F1/F2/F3 と分析品質スコアを表示します。
+- F1/F2 の母音図を Hz または Bark で表示できます。
+- 公開フォルマントデータに基づく正規化済み参照楕円を表示します。
+- 選択した語リストをすべて録音すると、話者自身の母音空間ポリゴンを描画します。
+- セッション結果を CSV として保存できます。
+- 音声ファイルはサーバー側に保存されません。短い録音を処理して結果を返した後、音声データは破棄されます。
 
-On macOS:
+### 実装の概要
+
+フロントエンドは React/Vite で作られています。ブラウザ上でマイク録音を行い、WAV 音声を backend API に送信します。
+
+バックエンドは FastAPI と Praat/Parselmouth を使っています。音声全体からエネルギーの高い有声区間を探し、その中央付近の短い安定窓で複数の時点からフォルマントを取得します。現在の測定値は、その窓内の F1/F2/F3 値の中央値です。
+
+参照楕円は手作業で描いたものではありません。Hillenbrand et al. 1995、Deterding 1997、Mokhtari and Tanaka 2000 などの公開データをもとに、話者ごとの Lobanov z-score 正規化を行い、各母音の 68% F1/F2 共分散楕円として生成しています。
+
+このツールは教育・デモ用です。研究発表用の厳密な音響分析を完全に置き換えるものではありません。
+
+### GitHub からダウンロードする方法
+
+Git を使う場合:
+
+```bash
+git clone https://github.com/Zyan-W/RealTimeVowelSpace.git
+cd RealTimeVowelSpace
+```
+
+Git を使わない場合:
+
+1. GitHub のリポジトリページを開きます。
+2. `Code` ボタンを押します。
+3. `Download ZIP` を選びます。
+4. ZIP ファイルを展開します。
+5. 展開した `RealTimeVowelSpace` フォルダを開きます。
+
+### 必要なもの
+
+- Python 3.12 以上
+- Node.js LTS
+- マイクを使えるブラウザ
+
+初回起動時に、起動スクリプトが Python と Node.js の依存パッケージを自動でインストールします。
+
+### Windows での使い方
+
+1. `RealTimeVowelSpace` フォルダを開きます。
+2. `start-dev.cmd` をダブルクリックします。
+3. `RealTimeVowelSpace is ready` と表示されるまで待ちます。
+4. 自動で開いたブラウザページを使います。
+
+停止するには、起動したウィンドウで `Ctrl+C` を押すか、そのウィンドウを閉じます。
+
+### macOS での使い方
+
+ターミナルで `RealTimeVowelSpace` フォルダに移動し、次を実行します。
 
 ```bash
 bash start-dev.sh
 ```
 
-Then wait until the launcher prints `RealTimeVowelSpace is ready` and use the browser page that opens.
+`RealTimeVowelSpace is ready` と表示されるまで待ち、自動で開いたブラウザページを使います。
 
-The launcher checks the backend environment, installs missing packages when needed, starts the backend and frontend, and opens the browser. If the usual ports are busy, it automatically chooses nearby free ports and prints the actual browser URL.
+停止するには、ターミナルで `Ctrl+C` を押します。
 
-To stop the tool, press `Ctrl+C` in the launcher window or terminal, or close that window.
+### ページ上での操作
 
-If the launcher says npm or Node.js was not found, install Node.js LTS and open the launcher again.
+1. `American`、`British`、`Japanese` のいずれかを選びます。
+2. 必要に応じて `Hz` または `Bark` を選びます。
+3. `Record` を押して、表示された単語または仮名を読みます。
+4. `Stop` を押すと、F1/F2/F3 と母音図上の点が表示されます。
+5. リストの最後まで録音すると、話者の母音空間ポリゴンが表示されます。
+6. ダウンロードボタンで CSV を保存できます。
 
-If the launcher says Python was not found, install Python 3.12 or newer and open the launcher again.
+---
 
-## What the Tool Does
+## English
 
-- Shows one word or kana prompt at a time.
-- Supports American English, British English, and Japanese vowel-space tasks.
-- Treats American English and British English as separate vowel systems with separate word lists and normalized reference ellipses.
-- Switches formant displays between Hz and Bark.
-- Records a short WAV clip in the browser.
-- Sends the clip to a FastAPI backend at `POST /api/analyze-token`.
-- Uses Praat/Parselmouth to estimate formants from the stable central vowel region.
-- Plots each result on an inverted F1/F2 vowel chart.
-- Connects recorded vowel points into a speaker vowel-space polygon after the full current word list has been measured.
-- Keeps results in the browser session only and offers CSV export.
-- Does not store uploaded audio on the server.
+RealTimeVowelSpace is a web-based teaching tool for visualizing vowel space. Users read one word or kana prompt at a time in the browser; the tool extracts F1/F2/F3 from the recording and immediately plots the result on a vowel chart.
 
-## Using the Page
+### Main Features
+
+- Supports American English, British English, and Japanese vowel tasks.
+- Shows F1/F2/F3 and an analysis-quality score for each recorded token.
+- Displays the F1/F2 vowel chart in either Hz or Bark.
+- Shows normalized reference ellipses derived from public formant datasets.
+- Draws the speaker's own vowel-space polygon after the full selected word list has been recorded.
+- Exports the browser session as CSV.
+- Does not store uploaded audio on the server. Each short recording is processed, returned as formant values, and discarded.
+
+### How It Works
+
+The frontend is built with React/Vite. It records microphone audio in the browser and sends a WAV clip to the backend API.
+
+The backend is built with FastAPI and Praat/Parselmouth. It finds a high-energy voiced region in the recording, selects a short stable window around the center of that region, samples formants at multiple time points, and returns the median F1/F2/F3 values from that window.
+
+The reference ellipses are not hand-drawn. They are generated from public formant datasets, including Hillenbrand et al. 1995, Deterding 1997, and Mokhtari and Tanaka 2000. The generator applies speaker-level Lobanov z-score normalization and calculates a 68% F1/F2 covariance ellipse for each vowel.
+
+This tool is intended for teaching and demonstration. It is not a full replacement for publication-grade acoustic analysis.
+
+### Download From GitHub
+
+With Git:
+
+```bash
+git clone https://github.com/Zyan-W/RealTimeVowelSpace.git
+cd RealTimeVowelSpace
+```
+
+Without Git:
+
+1. Open the repository page on GitHub.
+2. Click `Code`.
+3. Choose `Download ZIP`.
+4. Unzip the file.
+5. Open the extracted `RealTimeVowelSpace` folder.
+
+### Requirements
+
+- Python 3.12 or newer
+- Node.js LTS
+- A browser with microphone access
+
+On first launch, the startup script installs the required Python and Node.js packages automatically.
+
+### Windows Usage
+
+1. Open the `RealTimeVowelSpace` folder.
+2. Double-click `start-dev.cmd`.
+3. Wait until the launcher prints `RealTimeVowelSpace is ready`.
+4. Use the browser page that opens automatically.
+
+To stop the tool, press `Ctrl+C` in the launcher window or close that window.
+
+### macOS Usage
+
+Open Terminal, move into the `RealTimeVowelSpace` folder, and run:
+
+```bash
+bash start-dev.sh
+```
+
+Wait until the launcher prints `RealTimeVowelSpace is ready`, then use the browser page that opens automatically.
+
+To stop the tool, press `Ctrl+C` in the terminal.
+
+### Using the Page
 
 1. Choose `American`, `British`, or `Japanese`.
-2. Choose `Hz` or `Bark`.
-3. Click `Record`, say the displayed token, then click `Stop`.
-4. Continue through the list. Once every token in the chosen system has been measured, the speaker vowel-space polygon appears.
-5. Use the download button to export the session CSV.
-
-Switching systems clears the current session so American English, British English, and Japanese measurements do not mix.
-
-## Project Layout
-
-```text
-backend/   FastAPI API, corpus loading, Praat formant analysis, tests
-frontend/  React/Vite single page teaching interface
-shared/    Versioned corpus metadata used by both sides
-```
-
-## Backend
-
-Use this manual route only if you do not want to use the launcher.
-
-Windows:
-
-```powershell
-cd backend
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-macOS:
-
-```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-The API will be available at `http://localhost:8000`. It exposes:
-
-- `GET /api/health`
-- `GET /api/corpus`
-- `GET /api/corpora`
-- `GET /api/corpus/{corpus_id}`
-- `POST /api/analyze-token`
-
-## Frontend
-
-Use this manual route only if you do not want to use the launcher.
-
-Windows:
-
-```powershell
-cd frontend
-npm.cmd install
-npm.cmd run dev
-```
-
-macOS:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend defaults to `http://localhost:5173` and proxies `/api` requests to `http://localhost:8000`.
-
-## Notes on Accuracy
-
-This first version is for teaching demonstrations, not publication-grade phonetic measurement. The backend uses conservative heuristics: it trims low-energy regions, samples a stable central window, returns median F1/F2/F3 values, and reports warnings when the signal is clipped, quiet, or too short.
-
-Reference ellipses on the chart are pedagogical anchors. They are not universal pronunciation targets. They are generated from public formant datasets by applying speaker-intrinsic Lobanov z-score normalization, projecting the normalized values back to a corpus-average Hz scale, and calculating a 68% F1/F2 covariance ellipse for each vowel.
-
-## Corpus Notes
-
-The English systems are separated by lexical-set behavior rather than by reusing one word list with two reference overlays. Wells-style lexical sets distinguish, for example, RP LOT from General American LOT-PALM, and RP BATH-PALM-START from General American TRAP-BATH. American reference ellipses use the adult man/woman subset of Hillenbrand et al. 1995. British reference ellipses use Deterding's five male and five female Standard Southern British / RP-style MARSEC speakers. Japanese reference ellipses use Mokhtari and Tanaka's five adult male native speakers.
-
-The original v1 prototype drew hand-tuned ellipses. Those have been replaced with source-derived normalized ellipses generated by `scripts/generate_reference_ellipses.py`. The source cache stays local under `.tmp_data/`; the app reads only the generated corpus JSON.
-
-Useful background sources:
-
-- Wells lexical sets summary: https://teflpedia.com/Vowel_set
-- RP vowel chart explanation: https://www.uv.es/anglotic/accents_of_english/01/jc_wells_vowel_chart.html
-- Deterding 1997 Standard Southern British monophthong formants and measurement files: https://fass.ubd.edu.bn/data/JIPA-vowels/index.htm
-- Hillenbrand et al. 1995 American English vowel data, via the `phonTools` `h95` dataset documentation: https://search.r-project.org/CRAN/refmans/phonTools/html/h95.html
-- Clopper, Pisoni, and de Jong 2005 on regional American vowel variation: https://pmc.ncbi.nlm.nih.gov/articles/PMC3432912/
-- Mokhtari and Tanaka 2000 Japanese vowel formant corpus: https://isd.pu-toyama.ac.jp/~parham/sp_FormantDataETL.html
-- Lobanov-style z-score normalization background: https://reflector.vtti.ad.vt.edu/cran/web/packages/tidynorm/vignettes/norm-methods.html
-
-## Current Controls
-
-- System: American English, British English, or Japanese.
-- Unit: Hz or Bark. Recorded formants, reference centers, and normalized reference ellipses are converted for display; session CSV export contains the recorded values.
-- Polygon: after the full selected word list is recorded, measured points are sorted around their center and connected into a closed speaker vowel-space shape.
+2. Choose `Hz` or `Bark` if needed.
+3. Click `Record` and read the displayed word or kana.
+4. Click `Stop` to show F1/F2/F3 and plot the vowel point.
+5. Continue through the list; after all tokens are recorded, the speaker vowel-space polygon appears.
+6. Use the download button to export the CSV.
