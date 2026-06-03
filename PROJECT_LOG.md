@@ -15,3 +15,9 @@
 - Removed the English diphthong token `hayed`.
 - Added a recorded-speaker vowel-space polygon that connects measured points in corpus order.
 - Added a Japanese five-vowel corpus and a language switch between English and Japanese.
+
+## 2026-06-03 Usability
+
+- Added a Windows `start-dev.cmd` launcher that prepares dependencies, opens backend/frontend service windows, and opens the browser.
+- Reworked README into a quick-start guide before the lower-level backend/frontend commands.
+- Made frontend backend-connection errors more direct for users who open the page before the API is running.

@@ -1,10 +1,26 @@
 # RealTimeVowelSpace
 
-A public teaching demo for recording fixed English vowel tokens, extracting F1/F2 with a Praat-backed Python API, and plotting the results immediately in vowel space.
+A public teaching demo for recording fixed vowel tokens, extracting F1/F2 with a Praat-backed Python API, and plotting the results immediately in vowel space.
 
-## What v1 Does
+## Quick Start on Windows
 
-- Shows one English word prompt at a time.
+The easiest way to run the tool is:
+
+1. Double-click `start-dev.cmd` in the project folder.
+2. Wait for two service windows to open.
+3. Use the browser page at `http://localhost:5173`.
+
+The launcher checks the backend environment, installs missing packages when needed, starts the backend and frontend, and opens the browser.
+
+To stop the tool, close the two service windows or press `Ctrl+C` in each one.
+
+If the launcher says `npm.cmd was not found`, install Node.js LTS and open the launcher again.
+
+If the launcher says Python was not found, install Python 3.12 or newer and open the launcher again.
+
+## What the Tool Does
+
+- Shows one word or kana prompt at a time.
 - Supports English and Japanese vowel-space tasks.
 - Switches English reference regions between American and British accent anchors.
 - Switches formant displays between Hz and Bark.
@@ -16,6 +32,17 @@ A public teaching demo for recording fixed English vowel tokens, extracting F1/F
 - Keeps results in the browser session only and offers CSV export.
 - Does not store uploaded audio on the server.
 
+## Using the Page
+
+1. Choose `English` or `Japanese`.
+2. For English, choose `American` or `British` reference data.
+3. Choose `Hz` or `Bark`.
+4. Click `Record`, say the displayed token, then click `Stop`.
+5. Continue through the list. After three measured vowels, the speaker vowel-space polygon appears.
+6. Use the download button to export the session CSV.
+
+Switching language clears the current session so English and Japanese measurements do not mix.
+
 ## Project Layout
 
 ```text
@@ -25,6 +52,8 @@ shared/    Versioned corpus metadata used by both sides
 ```
 
 ## Backend
+
+Use this manual route only if you do not want to use `start-dev.cmd`.
 
 ```powershell
 cd backend
@@ -44,10 +73,12 @@ The API will be available at `http://localhost:8000`. It exposes:
 
 ## Frontend
 
+Use this manual route only if you do not want to use `start-dev.cmd`.
+
 ```powershell
 cd frontend
-npm install
-npm run dev
+npm.cmd install
+npm.cmd run dev
 ```
 
 The frontend defaults to `http://localhost:5173` and proxies `/api` requests to `http://localhost:8000`.

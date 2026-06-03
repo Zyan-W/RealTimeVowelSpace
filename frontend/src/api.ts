@@ -3,7 +3,7 @@ import type { AnalyzeResponse, Corpus, CorpusToken } from "./types";
 export async function fetchCorpora(): Promise<Corpus[]> {
   const response = await fetch("/api/corpora");
   if (!response.ok) {
-    throw new Error("Could not load the word lists.");
+    throw new Error("The analysis service is not ready. Start the backend and refresh this page.");
   }
   return response.json();
 }
@@ -11,7 +11,7 @@ export async function fetchCorpora(): Promise<Corpus[]> {
 export async function fetchCorpus(): Promise<Corpus> {
   const response = await fetch("/api/corpus");
   if (!response.ok) {
-    throw new Error("Could not load the word list.");
+    throw new Error("The word list could not be loaded. Start the backend and refresh this page.");
   }
   return response.json();
 }
@@ -30,7 +30,7 @@ export async function analyzeToken(corpus: Corpus, token: CorpusToken, wavBlob: 
 
   if (!response.ok) {
     const detail = await response.json().catch(() => null);
-    throw new Error(detail?.detail ?? "The backend could not analyze this recording.");
+    throw new Error(detail?.detail ?? "The recording could not be analyzed. Check that the backend window is still running.");
   }
 
   return response.json();
