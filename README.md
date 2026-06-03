@@ -7,12 +7,12 @@ A public teaching demo for recording fixed vowel tokens, extracting F1/F2 with a
 The easiest way to run the tool is:
 
 1. Double-click `start-dev.cmd` in the project folder.
-2. Wait for two service windows to open.
-3. Use the browser page at `http://localhost:5173`.
+2. Wait until the launcher prints `RealTimeVowelSpace is ready`.
+3. Use the browser page that the launcher opens.
 
-The launcher checks the backend environment, installs missing packages when needed, starts the backend and frontend, and opens the browser.
+The launcher checks the backend environment, installs missing packages when needed, starts the backend and frontend, and opens the browser. If the usual ports are busy, it automatically chooses nearby free ports and prints the actual browser URL.
 
-To stop the tool, close the two service windows or press `Ctrl+C` in each one.
+To stop the tool, press `Ctrl+C` in the launcher window or close that window.
 
 If the launcher says `npm.cmd was not found`, install Node.js LTS and open the launcher again.
 

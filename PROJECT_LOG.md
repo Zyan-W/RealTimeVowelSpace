@@ -30,3 +30,7 @@
 - Added Node/npm fallback lookup in Program Files so frontend launch does not depend only on PATH refresh.
 - Frontend helper now launches Vite through `node.exe node_modules\vite\bin\vite.js` to avoid Windows wrapper-script access errors.
 - Prefer Program Files Node/npm over PATH entries so stale or restricted PATH shims cannot break the launcher.
+- Added `stop-dev.cmd` as a manual cleanup helper for old local services.
+- Replaced fragile multi-window startup with a Python launcher that starts, checks, opens, and stops backend/frontend as one managed process group.
+- Launcher now chooses free backend/frontend ports automatically, passes the selected backend port into Vite's proxy, and verifies `/api/corpora` through the frontend before opening the browser.
+- Added root `pytest.ini` so backend tests can be run from the repository root.

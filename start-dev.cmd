@@ -64,15 +64,8 @@ if not exist "%FRONTEND_DIR%\node_modules" (
 )
 
 echo.
-echo Starting backend and frontend in two new windows...
-start "RealTimeVowelSpace backend" "%ROOT%run-backend.cmd"
-start "RealTimeVowelSpace frontend" "%ROOT%run-frontend.cmd"
-
-echo.
-echo The browser will open shortly. If it opens before the page is ready, wait a moment and refresh.
-timeout /t 3 >nul
-start "" "http://localhost:5173"
-
-echo.
-echo To stop the tool, close the two windows that were just opened, or press Ctrl+C in each one.
-pause
+echo Starting RealTimeVowelSpace...
+"%BACKEND_PY%" "%ROOT%scripts\dev_launcher.py"
+set "LAUNCHER_EXIT=%ERRORLEVEL%"
+if not "%RVWS_SMOKE_TEST%"=="1" pause
+exit /b %LAUNCHER_EXIT%

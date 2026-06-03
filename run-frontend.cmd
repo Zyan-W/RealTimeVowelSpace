@@ -24,4 +24,4 @@ if not exist "%FRONTEND_DIR%\node_modules\vite\bin\vite.js" (
 )
 
 cd /d "%FRONTEND_DIR%"
-"%NODE_CMD%" node_modules\vite\bin\vite.js --host 127.0.0.1 --port 5173
+"%NODE_CMD%" node_modules\vite\bin\vite.js --host 127.0.0.1 --port 5173 --strictPort
