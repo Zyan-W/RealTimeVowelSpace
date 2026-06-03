@@ -10,7 +10,7 @@ from .models import AnalyzeResponse, Corpus
 
 app = FastAPI(
     title="RealTimeVowelSpace API",
-    version="0.1.0",
+    version="1.0.0",
     description="Praat-backed vowel formant extraction for a teaching demo.",
 )
 

@@ -124,8 +124,9 @@ function App() {
         <div className="prompt-panel">
           <div className="topline">
             <span>{corpus?.language ?? "Vowel"} vowel space</span>
-            <span>{corpus?.version ?? "v1"}</span>
+            <span>{corpus?.version ?? "ver 1.0"}</span>
           </div>
+          <div className="authorline">WANG Zhiyan</div>
           <div className="switch-stack">
             <div className="segmented" aria-label="Language">
               <Globe2 size={16} />

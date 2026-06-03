@@ -1,6 +1,6 @@
 {
   "id": "british-english",
-  "version": "2026.06.v3",
+  "version": "ver 1.0",
   "language": "British English",
   "languageCode": "en-GB",
   "description": "Standard Southern British / RP teaching word list for stressed monophthong vowel-space plotting. Reference centers and 68% ellipses are generated from speaker-normalized public formant data and remain pedagogical anchors rather than universal targets.",

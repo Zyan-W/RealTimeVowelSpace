@@ -2,19 +2,27 @@
 
 A public teaching demo for recording fixed vowel tokens, extracting F1/F2 with a Praat-backed Python API, and plotting the results immediately in vowel space.
 
-## Quick Start on Windows
+## Quick Start
 
-The easiest way to run the tool is:
+On Windows:
 
 1. Double-click `start-dev.cmd` in the project folder.
 2. Wait until the launcher prints `RealTimeVowelSpace is ready`.
 3. Use the browser page that the launcher opens.
 
+On macOS:
+
+```bash
+bash start-dev.sh
+```
+
+Then wait until the launcher prints `RealTimeVowelSpace is ready` and use the browser page that opens.
+
 The launcher checks the backend environment, installs missing packages when needed, starts the backend and frontend, and opens the browser. If the usual ports are busy, it automatically chooses nearby free ports and prints the actual browser URL.
 
-To stop the tool, press `Ctrl+C` in the launcher window or close that window.
+To stop the tool, press `Ctrl+C` in the launcher window or terminal, or close that window.
 
-If the launcher says `npm.cmd was not found`, install Node.js LTS and open the launcher again.
+If the launcher says npm or Node.js was not found, install Node.js LTS and open the launcher again.
 
 If the launcher says Python was not found, install Python 3.12 or newer and open the launcher again.
 
@@ -52,12 +60,24 @@ shared/    Versioned corpus metadata used by both sides
 
 ## Backend
 
-Use this manual route only if you do not want to use `start-dev.cmd`.
+Use this manual route only if you do not want to use the launcher.
+
+Windows:
 
 ```powershell
 cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+macOS:
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
@@ -72,12 +92,22 @@ The API will be available at `http://localhost:8000`. It exposes:
 
 ## Frontend
 
-Use this manual route only if you do not want to use `start-dev.cmd`.
+Use this manual route only if you do not want to use the launcher.
+
+Windows:
 
 ```powershell
 cd frontend
 npm.cmd install
 npm.cmd run dev
+```
+
+macOS:
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 The frontend defaults to `http://localhost:5173` and proxies `/api` requests to `http://localhost:8000`.

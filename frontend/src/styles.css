@@ -64,6 +64,15 @@ button {
   letter-spacing: 0;
 }
 
+.authorline {
+  margin-top: 5px;
+  color: #506065;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-align: right;
+}
+
 .word-zone {
   flex: 1;
   display: grid;

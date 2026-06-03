@@ -56,3 +56,11 @@
 - Method: for each source corpus, calculate Lobanov speaker-intrinsic z-scores for F1/F2, project normalized values back to a corpus-average Hz scale, then calculate each vowel's covariance ellipse.
 - Source coverage: Hillenbrand et al. 1995 `h95` adult men/women for American English, Deterding 1997 MARSEC speaker spreadsheets for British English, and Mokhtari/Tanaka 2000 ETL formant data for Japanese.
 - Frontend renders normalized reference ellipses as sampled SVG paths so Bark display converts each sampled point instead of assuming linear Hz scaling.
+
+## 2026-06-04 Version and Cross-Platform Launch
+
+- Promoted the visible corpus version label to `ver 1.0` and added the author line `WANG Zhiyan` under the version row in the prompt panel.
+- Added a macOS entry script, `start-dev.sh`.
+- Moved shared launcher preparation into `scripts/bootstrap_dev.py` so Windows and macOS startup do not duplicate venv, pip, npm, and dependency-install logic.
+- Kept `start-dev.cmd` as a thin Windows entrypoint and `scripts/dev_launcher.py` as the shared backend/frontend process manager.
+- Removed old Windows-only `run-backend.cmd` and `run-frontend.cmd` helpers because the unified launcher supersedes them.

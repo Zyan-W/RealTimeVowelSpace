@@ -13,14 +13,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BACKEND_DIR = ROOT / "backend"
 FRONTEND_DIR = ROOT / "frontend"
-BACKEND_PY = BACKEND_DIR / ".venv" / "Scripts" / "python.exe"
 VITE_JS = FRONTEND_DIR / "node_modules" / "vite" / "bin" / "vite.js"
 
 
 def main() -> int:
     node = find_node()
-    ensure_file(BACKEND_PY, "Backend Python was not found. Run start-dev.cmd again.")
-    ensure_file(VITE_JS, "Frontend packages were not found. Run start-dev.cmd so it can install them.")
+    backend_py = backend_python_path()
+    ensure_file(backend_py, launcher_hint("Backend Python was not found."))
+    ensure_file(VITE_JS, launcher_hint("Frontend packages were not found."))
 
     backend_port = find_available_port(8000)
     frontend_port = find_available_port(5173)
@@ -32,7 +32,7 @@ def main() -> int:
     frontend_env["BACKEND_PORT"] = str(backend_port)
 
     backend = subprocess.Popen(
-        [str(BACKEND_PY), "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(backend_port)],
+        [str(backend_py), "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(backend_port)],
         cwd=BACKEND_DIR,
         env=backend_env,
     )
@@ -51,7 +51,7 @@ def main() -> int:
         print("RealTimeVowelSpace is ready.")
         print(f"Backend API: http://localhost:{backend_port}")
         print(f"Browser URL: {page_url}")
-        print("Press Ctrl+C in this window to stop both services.")
+        print(stop_hint())
         print("")
         if os.environ.get("RVWS_SMOKE_TEST") == "1":
             return 0
@@ -75,18 +75,41 @@ def main() -> int:
         terminate(frontend)
 
 
+def backend_python_path() -> Path:
+    if os.name == "nt":
+        return BACKEND_DIR / ".venv" / "Scripts" / "python.exe"
+    return BACKEND_DIR / ".venv" / "bin" / "python"
+
+
+def launcher_hint(message: str) -> str:
+    if os.name == "nt":
+        return f"{message} Run start-dev.cmd again."
+    return f"{message} Run ./start-dev.sh again."
+
+
+def stop_hint() -> str:
+    if os.name != "nt":
+        return "Press Ctrl+C in this terminal to stop both services."
+    return "Press Ctrl+C in this window to stop both services."
+
+
 def find_node() -> Path:
-    candidates = [
-        Path(os.environ.get("ProgramFiles", "")) / "nodejs" / "node.exe",
-        Path(os.environ.get("ProgramFiles(x86)", "")) / "nodejs" / "node.exe",
-    ]
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-    found = shutil.which("node.exe")
-    if found:
-        return Path(found)
-    raise SystemExit("node.exe was not found. Install Node.js LTS, then run start-dev.cmd again.")
+    if os.name == "nt":
+        candidates = [
+            Path(os.environ.get("ProgramFiles", "")) / "nodejs" / "node.exe",
+            Path(os.environ.get("ProgramFiles(x86)", "")) / "nodejs" / "node.exe",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+
+    for executable in ("node.exe", "node"):
+        found = shutil.which(executable)
+        if found:
+            return Path(found)
+
+    command = "start-dev.cmd" if os.name == "nt" else "./start-dev.sh"
+    raise SystemExit(f"Node.js was not found. Install Node.js LTS, then run {command} again.")
 
 
 def ensure_file(path: Path, message: str) -> None:

@@ -1,6 +1,6 @@
 {
   "id": "japanese",
-  "version": "2026.06.v1",
+  "version": "ver 1.0",
   "language": "Japanese",
   "languageCode": "ja",
   "description": "Five-vowel Japanese teaching word list for plotting vowel space. Reference centers and 68% ellipses are generated from speaker-normalized public formant data and remain pedagogical anchors rather than universal targets.",

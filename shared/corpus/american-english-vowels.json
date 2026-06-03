@@ -1,6 +1,6 @@
 {
   "id": "american-english",
-  "version": "2026.06.v3",
+  "version": "ver 1.0",
   "language": "American English",
   "languageCode": "en-US",
   "description": "General American teaching word list for stressed vowel-space plotting. Reference centers and 68% ellipses are generated from speaker-normalized public formant data and remain pedagogical anchors rather than universal targets.",
