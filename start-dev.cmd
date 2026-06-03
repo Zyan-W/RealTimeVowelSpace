@@ -5,8 +5,9 @@ set "ROOT=%~dp0"
 set "BACKEND_DIR=%ROOT%backend"
 set "FRONTEND_DIR=%ROOT%frontend"
 set "BACKEND_PY=%BACKEND_DIR%\.venv\Scripts\python.exe"
-set "PYTHONUTF8=1"
-set "PYTHONIOENCODING=utf-8"
+set "NPM_CMD=npm.cmd"
+set "PYTHONUTF8="
+set "PYTHONIOENCODING="
 
 echo RealTimeVowelSpace launcher
 echo.
@@ -36,17 +37,23 @@ if errorlevel 1 (
   exit /b 1
 )
 
-where npm.cmd >nul 2>nul
-if errorlevel 1 (
-  echo npm.cmd was not found. Install Node.js LTS, close this window, then run this launcher again.
-  pause
-  exit /b 1
+if exist "%ProgramFiles%\nodejs\npm.cmd" (
+  set "NPM_CMD=%ProgramFiles%\nodejs\npm.cmd"
+) else if exist "%ProgramFiles(x86)%\nodejs\npm.cmd" (
+  set "NPM_CMD=%ProgramFiles(x86)%\nodejs\npm.cmd"
+) else (
+  where npm.cmd >nul 2>nul
+  if errorlevel 1 (
+    echo npm.cmd was not found. Install Node.js LTS, close this window, then run this launcher again.
+    pause
+    exit /b 1
+  )
 )
 
 if not exist "%FRONTEND_DIR%\node_modules" (
   echo Frontend packages were not found. Running npm install...
   pushd "%FRONTEND_DIR%"
-  call npm.cmd install
+  call "%NPM_CMD%" install
   if errorlevel 1 (
     popd
     echo Frontend package installation failed.
@@ -58,8 +65,8 @@ if not exist "%FRONTEND_DIR%\node_modules" (
 
 echo.
 echo Starting backend and frontend in two new windows...
-start "RealTimeVowelSpace backend" cmd /k "chcp 65001 >nul && cd /d ""%BACKEND_DIR%"" && ""%BACKEND_PY%"" -m uvicorn app.main:app --reload --port 8000"
-start "RealTimeVowelSpace frontend" cmd /k "cd /d ""%FRONTEND_DIR%"" && npm.cmd run dev"
+start "RealTimeVowelSpace backend" "%ROOT%run-backend.cmd"
+start "RealTimeVowelSpace frontend" "%ROOT%run-frontend.cmd"
 
 echo.
 echo The browser will open shortly. If it opens before the page is ready, wait a moment and refresh.

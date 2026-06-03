@@ -26,3 +26,7 @@
 
 - Re-serialized corpus JSON files with ASCII Unicode escapes so Windows console encoding cannot corrupt display or loading.
 - Set backend launcher environment to UTF-8 and added a regression test that corpus JSON files remain ASCII-safe.
+- Replaced nested backend/frontend command chains with helper `.cmd` launchers so Windows quoting cannot corrupt environment variables or executable paths.
+- Added Node/npm fallback lookup in Program Files so frontend launch does not depend only on PATH refresh.
+- Frontend helper now launches Vite through `node.exe node_modules\vite\bin\vite.js` to avoid Windows wrapper-script access errors.
+- Prefer Program Files Node/npm over PATH entries so stale or restricted PATH shims cannot break the launcher.
