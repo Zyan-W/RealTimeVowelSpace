@@ -1,4 +1,4 @@
-import type { Corpus, DisplayUnit, ResultRow } from "../types";
+import type { Corpus, DisplayUnit, ReferencePoint, ResultRow } from "../types";
 import { displayValue, unitLabel } from "../units";
 
 type Props = {
@@ -61,6 +61,33 @@ export function orderPointsClockwise<T extends ChartPoint>(points: T[]): T[] {
   });
 }
 
+function referenceEllipsePath(
+  reference: ReferencePoint,
+  unit: DisplayUnit,
+  x: (f2: number) => number,
+  y: (f1: number) => number
+): string | null {
+  if (!reference.ellipse) return null;
+  const angle = (reference.ellipse.angleDeg * Math.PI) / 180;
+  const cosAngle = Math.cos(angle);
+  const sinAngle = Math.sin(angle);
+  const points: string[] = [];
+
+  for (let index = 0; index <= 72; index += 1) {
+    const theta = (index / 72) * Math.PI * 2;
+    const major = reference.ellipse.semiMajorHz * Math.cos(theta);
+    const minor = reference.ellipse.semiMinorHz * Math.sin(theta);
+    const f2Hz = reference.f2 + major * cosAngle - minor * sinAngle;
+    const f1Hz = reference.f1 + major * sinAngle + minor * cosAngle;
+    const f1 = displayValue(f1Hz, unit);
+    const f2 = displayValue(f2Hz, unit);
+    if (f1 == null || f2 == null) return null;
+    points.push(`${index === 0 ? "M" : "L"} ${x(f2).toFixed(2)} ${y(f1).toFixed(2)}`);
+  }
+
+  return `${points.join(" ")} Z`;
+}
+
 export function VowelChart({ corpus, results, selectedId, activeReferenceId, unit, onSelect }: Props) {
   const scale = SCALES[unit];
   const x = (f2: number) => PAD + ((scale.f2Max - f2) / (scale.f2Max - scale.f2Min)) * (WIDTH - PAD * 2);
@@ -109,15 +136,27 @@ export function VowelChart({ corpus, results, selectedId, activeReferenceId, uni
           const f1 = displayValue(reference.f1, unit);
           const f2 = displayValue(reference.f2, unit);
           if (f1 == null || f2 == null) return null;
+          const ellipsePath = referenceEllipsePath(reference, unit, x, y);
           return (
             <g key={token.id}>
+              {ellipsePath && (
+                <path
+                  className="reference-ellipse"
+                  d={ellipsePath}
+                  style={{ stroke: token.color, fill: token.color }}
+                />
+              )}
               <circle
                 className="reference-point"
                 cx={x(f2)}
                 cy={y(f1)}
                 r={10}
                 style={{ stroke: token.color }}
-              />
+              >
+                {reference.ellipse && (
+                  <title>{`${token.ipa} normalized ${Math.round(reference.ellipse.confidence * 100)}% reference ellipse, n=${reference.ellipse.n}, ${reference.ellipse.source}`}</title>
+                )}
+              </circle>
               <text className="reference-label" x={x(f2) + 14} y={y(f1) + 5}>
                 {token.ipa}
               </text>

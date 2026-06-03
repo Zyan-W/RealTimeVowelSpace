@@ -27,7 +27,17 @@ const corpus: Corpus = {
       references: {
         test: {
           f1: 300,
-          f2: 2500
+          f2: 2500,
+          ellipse: {
+            semiMajorHz: 120,
+            semiMinorHz: 60,
+            angleDeg: -10,
+            confidence: 0.68,
+            n: 93,
+            normalized: true,
+            method: "speaker-lobanov-z-projected-to-corpus-average-hz",
+            source: "test-source"
+          }
         }
       }
     }
@@ -35,7 +45,7 @@ const corpus: Corpus = {
 };
 
 describe("VowelChart reference points", () => {
-  it("renders reference centers without statistical ellipses", () => {
+  it("renders normalized reference ranges as sampled paths", () => {
     const { container } = render(
       <VowelChart
         corpus={corpus}
@@ -48,6 +58,7 @@ describe("VowelChart reference points", () => {
     );
 
     expect(container.querySelector("ellipse")).toBeNull();
+    expect(container.querySelector(".reference-ellipse")).not.toBeNull();
     expect(container.querySelector(".reference-point")).not.toBeNull();
   });
 });

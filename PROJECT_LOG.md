@@ -45,6 +45,14 @@
 ## 2026-06-03 Reference Data Review
 
 - Public formant datasets exist for parts of the current demo scope: Hillenbrand et al. 1995 for American English `hVd` vowels, Deterding 1997 for Standard Southern British monophthongs, and Mokhtari and Tanaka 2000 for Japanese vowels.
-- These datasets differ in accent coverage, speaker grouping, word lists, measurement method, and available distribution metadata, so the v1 chart should not show one comparable set of target ellipses across all corpora.
-- Removed the hand-tuned `radiusF1` and `radiusF2` fields from corpus JSON and changed the chart to show reference center points only.
-- README now documents the source lineage and the reason reference ellipses are intentionally omitted.
+- These datasets differ in accent coverage, speaker grouping, word lists, measurement method, and available distribution metadata, so the first correction removed unsupported hand-tuned target ellipses.
+- Removed the hand-tuned `radiusF1` and `radiusF2` fields from corpus JSON as an interim step and changed the chart to show reference center points only.
+- This interim point-only design was superseded by the normalized source-derived ellipse work below.
+
+## 2026-06-03 Normalized Reference Ellipses
+
+- Restored reference ranges as source-derived ellipses rather than hand-tuned radii.
+- Added `scripts/generate_reference_ellipses.py` to generate corpus reference centers and 68% F1/F2 covariance ellipses from public data.
+- Method: for each source corpus, calculate Lobanov speaker-intrinsic z-scores for F1/F2, project normalized values back to a corpus-average Hz scale, then calculate each vowel's covariance ellipse.
+- Source coverage: Hillenbrand et al. 1995 `h95` adult men/women for American English, Deterding 1997 MARSEC speaker spreadsheets for British English, and Mokhtari/Tanaka 2000 ETL formant data for Japanese.
+- Frontend renders normalized reference ellipses as sampled SVG paths so Bark display converts each sampled point instead of assuming linear Hz scaling.

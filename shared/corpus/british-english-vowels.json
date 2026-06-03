@@ -3,7 +3,7 @@
   "version": "2026.06.v3",
   "language": "British English",
   "languageCode": "en-GB",
-  "description": "Standard Southern British / RP teaching word list for stressed monophthong vowel-space plotting. Reference points are pedagogical anchors rather than universal targets.",
+  "description": "Standard Southern British / RP teaching word list for stressed monophthong vowel-space plotting. Reference centers and 68% ellipses are generated from speaker-normalized public formant data and remain pedagogical anchors rather than universal targets.",
   "referenceSets": [
     {
       "id": "british",
@@ -25,8 +25,18 @@
       },
       "references": {
         "british": {
-          "f1": 292,
-          "f2": 2452
+          "f1": 283,
+          "f2": 2462,
+          "ellipse": {
+            "semiMajorHz": 204,
+            "semiMinorHz": 77,
+            "angleDeg": -8.9,
+            "confidence": 0.68,
+            "n": 113,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -44,8 +54,18 @@
       },
       "references": {
         "british": {
-          "f1": 376,
-          "f2": 1966
+          "f1": 378,
+          "f2": 1945,
+          "ellipse": {
+            "semiMajorHz": 261,
+            "semiMinorHz": 76,
+            "angleDeg": -1.7,
+            "confidence": 0.68,
+            "n": 114,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -63,8 +83,18 @@
       },
       "references": {
         "british": {
-          "f1": 607,
-          "f2": 1857
+          "f1": 599,
+          "f2": 1826,
+          "ellipse": {
+            "semiMajorHz": 262,
+            "semiMinorHz": 134,
+            "angleDeg": 0.3,
+            "confidence": 0.68,
+            "n": 133,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -82,8 +112,18 @@
       },
       "references": {
         "british": {
-          "f1": 854,
-          "f2": 1675
+          "f1": 839,
+          "f2": 1673,
+          "ellipse": {
+            "semiMajorHz": 187,
+            "semiMinorHz": 165,
+            "angleDeg": -13.9,
+            "confidence": 0.68,
+            "n": 126,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -102,7 +142,17 @@
       "references": {
         "british": {
           "f1": 778,
-          "f2": 1236
+          "f2": 1238,
+          "ellipse": {
+            "semiMajorHz": 143,
+            "semiMinorHz": 98,
+            "angleDeg": 49.1,
+            "confidence": 0.68,
+            "n": 90,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -120,8 +170,18 @@
       },
       "references": {
         "british": {
-          "f1": 655,
-          "f2": 1131
+          "f1": 660,
+          "f2": 1132,
+          "ellipse": {
+            "semiMajorHz": 141,
+            "semiMinorHz": 121,
+            "angleDeg": 51.2,
+            "confidence": 0.68,
+            "n": 107,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -139,8 +199,18 @@
       },
       "references": {
         "british": {
-          "f1": 402,
-          "f2": 858
+          "f1": 412,
+          "f2": 858,
+          "ellipse": {
+            "semiMajorHz": 155,
+            "semiMinorHz": 90,
+            "angleDeg": 16.2,
+            "confidence": 0.68,
+            "n": 103,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -158,8 +228,18 @@
       },
       "references": {
         "british": {
-          "f1": 395,
-          "f2": 1257
+          "f1": 393,
+          "f2": 1230,
+          "ellipse": {
+            "semiMajorHz": 273,
+            "semiMinorHz": 59,
+            "angleDeg": -0.8,
+            "confidence": 0.68,
+            "n": 57,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -177,8 +257,18 @@
       },
       "references": {
         "british": {
-          "f1": 322,
-          "f2": 1314
+          "f1": 321,
+          "f2": 1320,
+          "ellipse": {
+            "semiMajorHz": 289,
+            "semiMinorHz": 76,
+            "angleDeg": -2.6,
+            "confidence": 0.68,
+            "n": 80,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -196,8 +286,18 @@
       },
       "references": {
         "british": {
-          "f1": 779,
-          "f2": 1359
+          "f1": 776,
+          "f2": 1358,
+          "ellipse": {
+            "semiMajorHz": 137,
+            "semiMinorHz": 119,
+            "angleDeg": -77.5,
+            "confidence": 0.68,
+            "n": 116,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     },
@@ -215,8 +315,18 @@
       },
       "references": {
         "british": {
-          "f1": 542,
-          "f2": 1566
+          "f1": 557,
+          "f2": 1543,
+          "ellipse": {
+            "semiMajorHz": 160,
+            "semiMinorHz": 124,
+            "angleDeg": -38.3,
+            "confidence": 0.68,
+            "n": 81,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "deterding1997-marsec"
+          }
         }
       }
     }

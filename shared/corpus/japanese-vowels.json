@@ -3,7 +3,7 @@
   "version": "2026.06.v1",
   "language": "Japanese",
   "languageCode": "ja",
-  "description": "Five-vowel Japanese teaching word list for plotting vowel space. Reference points are pedagogical anchors, not universal targets.",
+  "description": "Five-vowel Japanese teaching word list for plotting vowel space. Reference centers and 68% ellipses are generated from speaker-normalized public formant data and remain pedagogical anchors rather than universal targets.",
   "referenceSets": [
     {
       "id": "native",
@@ -25,8 +25,18 @@
       },
       "references": {
         "native": {
-          "f1": 760,
-          "f2": 1350
+          "f1": 744,
+          "f2": 1240,
+          "ellipse": {
+            "semiMajorHz": 95,
+            "semiMinorHz": 76,
+            "angleDeg": 34.6,
+            "confidence": 0.68,
+            "n": 550,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "mokhtari-tanaka2000-etl"
+          }
         }
       }
     },
@@ -44,8 +54,18 @@
       },
       "references": {
         "native": {
-          "f1": 300,
-          "f2": 2450
+          "f1": 297,
+          "f2": 2082,
+          "ellipse": {
+            "semiMajorHz": 111,
+            "semiMinorHz": 41,
+            "angleDeg": -1.7,
+            "confidence": 0.68,
+            "n": 550,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "mokhtari-tanaka2000-etl"
+          }
         }
       }
     },
@@ -63,8 +83,18 @@
       },
       "references": {
         "native": {
-          "f1": 350,
-          "f2": 1500
+          "f1": 356,
+          "f2": 1284,
+          "ellipse": {
+            "semiMajorHz": 215,
+            "semiMinorHz": 30,
+            "angleDeg": 3.0,
+            "confidence": 0.68,
+            "n": 550,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "mokhtari-tanaka2000-etl"
+          }
         }
       }
     },
@@ -82,8 +112,18 @@
       },
       "references": {
         "native": {
-          "f1": 500,
-          "f2": 2100
+          "f1": 482,
+          "f2": 1857,
+          "ellipse": {
+            "semiMajorHz": 86,
+            "semiMinorHz": 49,
+            "angleDeg": 0.4,
+            "confidence": 0.68,
+            "n": 550,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "mokhtari-tanaka2000-etl"
+          }
         }
       }
     },
@@ -101,8 +141,18 @@
       },
       "references": {
         "native": {
-          "f1": 500,
-          "f2": 950
+          "f1": 459,
+          "f2": 855,
+          "ellipse": {
+            "semiMajorHz": 73,
+            "semiMinorHz": 28,
+            "angleDeg": 17.6,
+            "confidence": 0.68,
+            "n": 550,
+            "normalized": true,
+            "method": "speaker-lobanov-z-projected-to-corpus-average-hz",
+            "source": "mokhtari-tanaka2000-etl"
+          }
         }
       }
     }

@@ -4,9 +4,21 @@ export type AnalysisHints = {
   timeStep: number;
 };
 
+export type ReferenceEllipse = {
+  semiMajorHz: number;
+  semiMinorHz: number;
+  angleDeg: number;
+  confidence: number;
+  n: number;
+  normalized: boolean;
+  method: string;
+  source: string;
+};
+
 export type ReferencePoint = {
   f1: number;
   f2: number;
+  ellipse?: ReferenceEllipse;
 };
 
 export type ReferenceSet = {

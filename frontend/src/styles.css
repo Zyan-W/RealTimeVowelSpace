@@ -227,6 +227,11 @@ h1 {
   font-size: 13px;
 }
 
+.reference-ellipse {
+  opacity: 0.12;
+  stroke-width: 1.8;
+}
+
 .reference-point {
   fill: rgba(255, 255, 255, 0.68);
   opacity: 0.86;

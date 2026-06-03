@@ -19,6 +19,13 @@ def test_tokens_have_reference_points_and_analysis_hints():
             reference = next(iter(token.references.values()))
             assert 200 <= reference.f1 <= 1000
             assert 600 <= reference.f2 <= 3000
+            assert reference.ellipse is not None
+            assert reference.ellipse.normalized
+            assert reference.ellipse.method == "speaker-lobanov-z-projected-to-corpus-average-hz"
+            assert reference.ellipse.source
+            assert reference.ellipse.confidence == 0.68
+            assert 0 < reference.ellipse.semiMinorHz <= reference.ellipse.semiMajorHz
+            assert reference.ellipse.n >= 50
             assert not hasattr(reference, "radiusF1")
             assert not hasattr(reference, "radiusF2")
             assert 40 <= token.analysis.windowMs <= 300

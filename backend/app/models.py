@@ -9,9 +9,21 @@ class AnalysisHints(BaseModel):
     timeStep: float = Field(default=0.005, gt=0, le=0.05)
 
 
+class ReferenceEllipse(BaseModel):
+    semiMajorHz: float = Field(gt=0)
+    semiMinorHz: float = Field(gt=0)
+    angleDeg: float
+    confidence: float = Field(gt=0, lt=1)
+    n: int = Field(gt=2)
+    normalized: bool = True
+    method: str
+    source: str
+
+
 class ReferencePoint(BaseModel):
     f1: float
     f2: float
+    ellipse: ReferenceEllipse | None = None
 
 
 class ReferenceSet(BaseModel):
