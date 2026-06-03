@@ -69,3 +69,9 @@
 
 - Rewrote `README.md` as a bilingual Japanese-then-English user guide.
 - README now focuses on project functionality, a concise implementation overview, GitHub download options, prerequisites, and Windows/macOS usage via `start-dev.cmd` and `start-dev.sh`.
+
+## 2026-06-04 Runtime Prerequisite Installer
+
+- Added Windows and macOS prerequisite checks before the shared Python bootstrap runs.
+- Windows can offer an explicit `winget` install for missing Python 3.12 and Node.js LTS; macOS can offer an explicit Homebrew install when Homebrew is already available.
+- Clarified the README distinction between system runtimes and project dependency packages.

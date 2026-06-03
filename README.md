@@ -47,7 +47,9 @@ Git を使わない場合:
 - Node.js LTS
 - マイクを使えるブラウザ
 
-初回起動時に、起動スクリプトが Python と Node.js の依存パッケージを自動でインストールします。
+Python と Node.js 本体が見つからない場合、起動スクリプトはインストールするかどうかを確認します。Windows では `winget`、macOS では Homebrew が使える場合に自動インストールできます。
+
+初回起動時には、このプロジェクトに必要な Python パッケージと Node.js パッケージも自動でインストールします。
 
 ### Windows での使い方
 
@@ -128,7 +130,9 @@ Without Git:
 - Node.js LTS
 - A browser with microphone access
 
-On first launch, the startup script installs the required Python and Node.js packages automatically.
+If Python or Node.js is missing, the launcher asks whether to install the missing runtime. On Windows it uses `winget`; on macOS it can use Homebrew if Homebrew is already installed.
+
+On first launch, it also installs the required project Python and Node.js packages automatically.
 
 ### Windows Usage
 

@@ -3,15 +3,18 @@ from __future__ import annotations
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 BACKEND_DIR = ROOT / "backend"
 FRONTEND_DIR = ROOT / "frontend"
+MIN_PYTHON = (3, 12)
 
 
 def main() -> int:
+    ensure_supported_python()
     backend_py = backend_python_path()
     if not backend_py.exists():
         print("Backend environment was not found. Creating backend/.venv...", flush=True)
@@ -42,12 +45,28 @@ def create_backend_venv() -> None:
 
 
 def find_python_for_venv() -> list[str]:
+    if sys.version_info >= MIN_PYTHON:
+        return [sys.executable]
+
     if os.name == "nt" and shutil.which("py"):
         return ["py", "-3"]
+
+    if os.name == "nt":
+        local_python = Path(os.environ.get("LocalAppData", "")) / "Programs" / "Python" / "Python312" / "python.exe"
+        if local_python.exists():
+            return [str(local_python)]
+
     for executable in ("python3", "python"):
         if shutil.which(executable):
             return [executable]
     raise SystemExit("Python was not found. Install Python 3.12 or newer, then run this launcher again.")
+
+
+def ensure_supported_python() -> None:
+    if sys.version_info >= MIN_PYTHON:
+        return
+    version = ".".join(str(part) for part in sys.version_info[:3])
+    raise SystemExit(f"Python {version} is too old. Install Python 3.12 or newer, then run this launcher again.")
 
 
 def find_npm() -> Path:
