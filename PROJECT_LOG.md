@@ -21,3 +21,8 @@
 - Added a Windows `start-dev.cmd` launcher that prepares dependencies, opens backend/frontend service windows, and opens the browser.
 - Reworked README into a quick-start guide before the lower-level backend/frontend commands.
 - Made frontend backend-connection errors more direct for users who open the page before the API is running.
+
+## 2026-06-03 Encoding Fix
+
+- Re-serialized corpus JSON files with ASCII Unicode escapes so Windows console encoding cannot corrupt display or loading.
+- Set backend launcher environment to UTF-8 and added a regression test that corpus JSON files remain ASCII-safe.

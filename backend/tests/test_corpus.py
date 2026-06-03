@@ -1,4 +1,4 @@
-from app.corpus import load_corpora, load_corpus
+from app.corpus import CORPUS_DIR, load_corpora, load_corpus
 
 
 def test_corpus_has_unique_token_ids():
@@ -35,3 +35,8 @@ def test_japanese_corpus_has_five_vowels():
 def test_load_corpora_returns_language_map():
     corpora = load_corpora()
     assert {"english", "japanese"} <= set(corpora)
+
+
+def test_corpus_json_files_are_ascii_escaped():
+    for path in CORPUS_DIR.glob("*.json"):
+        assert path.read_bytes().isascii()

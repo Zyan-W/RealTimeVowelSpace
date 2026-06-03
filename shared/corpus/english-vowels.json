@@ -5,8 +5,14 @@
   "languageCode": "en",
   "description": "Monophthong teaching word list for plotting English vowel space. Reference regions are pedagogical anchors, not universal targets.",
   "referenceSets": [
-    { "id": "american", "label": "American" },
-    { "id": "british", "label": "British" }
+    {
+      "id": "american",
+      "label": "American"
+    },
+    {
+      "id": "british",
+      "label": "British"
+    }
   ],
   "tokens": [
     {
@@ -16,10 +22,24 @@
       "vowel": "i",
       "ipa": "/i/",
       "color": "#2166ac",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 300, "f2": 2500, "radiusF1": 80, "radiusF2": 260 },
-        "british": { "f1": 285, "f2": 2600, "radiusF1": 80, "radiusF2": 260 }
+        "american": {
+          "f1": 300,
+          "f2": 2500,
+          "radiusF1": 80,
+          "radiusF2": 260
+        },
+        "british": {
+          "f1": 285,
+          "f2": 2600,
+          "radiusF1": 80,
+          "radiusF2": 260
+        }
       }
     },
     {
@@ -27,12 +47,26 @@
       "word": "hid",
       "display": "hid",
       "vowel": "ih",
-      "ipa": "/ɪ/",
+      "ipa": "/\u026a/",
       "color": "#4393c3",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 430, "f2": 2100, "radiusF1": 90, "radiusF2": 250 },
-        "british": { "f1": 390, "f2": 2200, "radiusF1": 90, "radiusF2": 250 }
+        "american": {
+          "f1": 430,
+          "f2": 2100,
+          "radiusF1": 90,
+          "radiusF2": 250
+        },
+        "british": {
+          "f1": 390,
+          "f2": 2200,
+          "radiusF1": 90,
+          "radiusF2": 250
+        }
       }
     },
     {
@@ -40,12 +74,26 @@
       "word": "head",
       "display": "head",
       "vowel": "eh",
-      "ipa": "/ɛ/",
+      "ipa": "/\u025b/",
       "color": "#5aae61",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 610, "f2": 1900, "radiusF1": 110, "radiusF2": 260 },
-        "british": { "f1": 560, "f2": 2000, "radiusF1": 110, "radiusF2": 260 }
+        "american": {
+          "f1": 610,
+          "f2": 1900,
+          "radiusF1": 110,
+          "radiusF2": 260
+        },
+        "british": {
+          "f1": 560,
+          "f2": 2000,
+          "radiusF1": 110,
+          "radiusF2": 260
+        }
       }
     },
     {
@@ -53,12 +101,26 @@
       "word": "had",
       "display": "had",
       "vowel": "ae",
-      "ipa": "/æ/",
+      "ipa": "/\u00e6/",
       "color": "#1b7837",
-      "analysis": { "windowMs": 130, "maxFormantHz": 5500, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5500,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 860, "f2": 1800, "radiusF1": 140, "radiusF2": 300 },
-        "british": { "f1": 740, "f2": 1900, "radiusF1": 130, "radiusF2": 280 }
+        "american": {
+          "f1": 860,
+          "f2": 1800,
+          "radiusF1": 140,
+          "radiusF2": 300
+        },
+        "british": {
+          "f1": 740,
+          "f2": 1900,
+          "radiusF1": 130,
+          "radiusF2": 280
+        }
       }
     },
     {
@@ -66,12 +128,26 @@
       "word": "hod",
       "display": "hod",
       "vowel": "aa",
-      "ipa": "/ɑ/",
+      "ipa": "/\u0251/",
       "color": "#d6604d",
-      "analysis": { "windowMs": 130, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 730, "f2": 1100, "radiusF1": 130, "radiusF2": 260 },
-        "british": { "f1": 760, "f2": 1250, "radiusF1": 130, "radiusF2": 260 }
+        "american": {
+          "f1": 730,
+          "f2": 1100,
+          "radiusF1": 130,
+          "radiusF2": 260
+        },
+        "british": {
+          "f1": 760,
+          "f2": 1250,
+          "radiusF1": 130,
+          "radiusF2": 260
+        }
       }
     },
     {
@@ -79,12 +155,26 @@
       "word": "hawed",
       "display": "hawed",
       "vowel": "aw",
-      "ipa": "/ɔ/",
+      "ipa": "/\u0254/",
       "color": "#f4a582",
-      "analysis": { "windowMs": 130, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 130,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 570, "f2": 900, "radiusF1": 120, "radiusF2": 220 },
-        "british": { "f1": 520, "f2": 950, "radiusF1": 110, "radiusF2": 220 }
+        "american": {
+          "f1": 570,
+          "f2": 900,
+          "radiusF1": 120,
+          "radiusF2": 220
+        },
+        "british": {
+          "f1": 520,
+          "f2": 950,
+          "radiusF1": 110,
+          "radiusF2": 220
+        }
       }
     },
     {
@@ -92,12 +182,26 @@
       "word": "hood",
       "display": "hood",
       "vowel": "uh",
-      "ipa": "/ʊ/",
+      "ipa": "/\u028a/",
       "color": "#b2182b",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 460, "f2": 1100, "radiusF1": 90, "radiusF2": 230 },
-        "british": { "f1": 430, "f2": 1250, "radiusF1": 90, "radiusF2": 240 }
+        "american": {
+          "f1": 460,
+          "f2": 1100,
+          "radiusF1": 90,
+          "radiusF2": 230
+        },
+        "british": {
+          "f1": 430,
+          "f2": 1250,
+          "radiusF1": 90,
+          "radiusF2": 240
+        }
       }
     },
     {
@@ -107,23 +211,51 @@
       "vowel": "u",
       "ipa": "/u/",
       "color": "#762a83",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 350, "f2": 900, "radiusF1": 80, "radiusF2": 230 },
-        "british": { "f1": 320, "f2": 950, "radiusF1": 80, "radiusF2": 230 }
+        "american": {
+          "f1": 350,
+          "f2": 900,
+          "radiusF1": 80,
+          "radiusF2": 230
+        },
+        "british": {
+          "f1": 320,
+          "f2": 950,
+          "radiusF1": 80,
+          "radiusF2": 230
+        }
       }
     },
     {
       "id": "hud",
       "word": "hud",
       "display": "hud",
-      "vowel": "ʌ",
-      "ipa": "/ʌ/",
+      "vowel": "\u028c",
+      "ipa": "/\u028c/",
       "color": "#9970ab",
-      "analysis": { "windowMs": 120, "maxFormantHz": 5000, "timeStep": 0.005 },
+      "analysis": {
+        "windowMs": 120,
+        "maxFormantHz": 5000,
+        "timeStep": 0.005
+      },
       "references": {
-        "american": { "f1": 640, "f2": 1200, "radiusF1": 120, "radiusF2": 260 },
-        "british": { "f1": 600, "f2": 1300, "radiusF1": 120, "radiusF2": 260 }
+        "american": {
+          "f1": 640,
+          "f2": 1200,
+          "radiusF1": 120,
+          "radiusF2": 260
+        },
+        "british": {
+          "f1": 600,
+          "f2": 1300,
+          "radiusF1": 120,
+          "radiusF2": 260
+        }
       }
     }
   ]
