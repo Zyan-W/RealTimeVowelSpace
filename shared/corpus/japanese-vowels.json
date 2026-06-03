@@ -3,7 +3,7 @@
   "version": "2026.06.v1",
   "language": "Japanese",
   "languageCode": "ja",
-  "description": "Five-vowel Japanese teaching word list for plotting vowel space. Reference regions are pedagogical anchors, not universal targets.",
+  "description": "Five-vowel Japanese teaching word list for plotting vowel space. Reference points are pedagogical anchors, not universal targets.",
   "referenceSets": [
     {
       "id": "native",
@@ -26,9 +26,7 @@
       "references": {
         "native": {
           "f1": 760,
-          "f2": 1350,
-          "radiusF1": 120,
-          "radiusF2": 250
+          "f2": 1350
         }
       }
     },
@@ -47,9 +45,7 @@
       "references": {
         "native": {
           "f1": 300,
-          "f2": 2450,
-          "radiusF1": 80,
-          "radiusF2": 260
+          "f2": 2450
         }
       }
     },
@@ -68,9 +64,7 @@
       "references": {
         "native": {
           "f1": 350,
-          "f2": 1500,
-          "radiusF1": 90,
-          "radiusF2": 300
+          "f2": 1500
         }
       }
     },
@@ -89,9 +83,7 @@
       "references": {
         "native": {
           "f1": 500,
-          "f2": 2100,
-          "radiusF1": 100,
-          "radiusF2": 260
+          "f2": 2100
         }
       }
     },
@@ -110,9 +102,7 @@
       "references": {
         "native": {
           "f1": 500,
-          "f2": 950,
-          "radiusF1": 100,
-          "radiusF2": 220
+          "f2": 950
         }
       }
     }

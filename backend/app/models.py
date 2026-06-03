@@ -9,11 +9,9 @@ class AnalysisHints(BaseModel):
     timeStep: float = Field(default=0.005, gt=0, le=0.05)
 
 
-class ReferenceRegion(BaseModel):
+class ReferencePoint(BaseModel):
     f1: float
     f2: float
-    radiusF1: float
-    radiusF2: float
 
 
 class ReferenceSet(BaseModel):
@@ -29,7 +27,7 @@ class CorpusToken(BaseModel):
     ipa: str
     color: str
     analysis: AnalysisHints
-    references: dict[str, ReferenceRegion]
+    references: dict[str, ReferencePoint]
 
 
 class Corpus(BaseModel):

@@ -227,15 +227,21 @@ h1 {
   font-size: 13px;
 }
 
-.reference-region {
-  opacity: 0.12;
-  stroke-width: 2;
+.reference-point {
+  fill: rgba(255, 255, 255, 0.68);
+  opacity: 0.86;
+  stroke-dasharray: 4 3;
+  stroke-width: 2.2;
 }
 
 .reference-label {
   fill: #263235;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
+  paint-order: stroke;
+  stroke: #fbfcfa;
+  stroke-linejoin: round;
+  stroke-width: 4px;
 }
 
 .speaker-polygon {

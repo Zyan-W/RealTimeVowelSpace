@@ -9,7 +9,7 @@ def test_corpus_has_unique_token_ids():
     assert len(corpus.tokens) >= 8
 
 
-def test_tokens_have_reference_regions_and_analysis_hints():
+def test_tokens_have_reference_points_and_analysis_hints():
     for corpus in load_corpora().values():
         reference_ids = {reference.id for reference in corpus.referenceSets}
         for token in corpus.tokens:
@@ -19,6 +19,8 @@ def test_tokens_have_reference_regions_and_analysis_hints():
             reference = next(iter(token.references.values()))
             assert 200 <= reference.f1 <= 1000
             assert 600 <= reference.f2 <= 3000
+            assert not hasattr(reference, "radiusF1")
+            assert not hasattr(reference, "radiusF2")
             assert 40 <= token.analysis.windowMs <= 300
 
 
@@ -51,4 +53,7 @@ def test_load_corpora_returns_language_map():
 
 def test_corpus_json_files_are_ascii_escaped():
     for path in CORPUS_DIR.glob("*.json"):
-        assert path.read_bytes().isascii()
+        content = path.read_text(encoding="utf-8")
+        assert content.encode("utf-8").isascii()
+        assert '"radiusF1"' not in content
+        assert '"radiusF2"' not in content

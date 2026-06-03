@@ -18,10 +18,3 @@ export function formatFormant(hz: number | null, unit: DisplayUnit): string {
 export function unitLabel(unit: DisplayUnit): string {
   return unit === "bark" ? "Bark" : "Hz";
 }
-
-export function referenceRadiusToUnit(centerHz: number, radiusHz: number, unit: DisplayUnit): number {
-  if (unit === "hz") return radiusHz;
-  const lower = Math.max(1, centerHz - radiusHz);
-  const upper = centerHz + radiusHz;
-  return Math.abs(hzToBark(upper) - hzToBark(lower)) / 2;
-}

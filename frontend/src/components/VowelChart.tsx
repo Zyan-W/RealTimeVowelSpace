@@ -1,5 +1,5 @@
 import type { Corpus, DisplayUnit, ResultRow } from "../types";
-import { displayValue, referenceRadiusToUnit, unitLabel } from "../units";
+import { displayValue, unitLabel } from "../units";
 
 type Props = {
   corpus: Corpus | null;
@@ -109,19 +109,16 @@ export function VowelChart({ corpus, results, selectedId, activeReferenceId, uni
           const f1 = displayValue(reference.f1, unit);
           const f2 = displayValue(reference.f2, unit);
           if (f1 == null || f2 == null) return null;
-          const radiusF1 = referenceRadiusToUnit(reference.f1, reference.radiusF1, unit);
-          const radiusF2 = referenceRadiusToUnit(reference.f2, reference.radiusF2, unit);
           return (
             <g key={token.id}>
-              <ellipse
-                className="reference-region"
+              <circle
+                className="reference-point"
                 cx={x(f2)}
                 cy={y(f1)}
-                rx={(radiusF2 / (scale.f2Max - scale.f2Min)) * (WIDTH - PAD * 2)}
-                ry={(radiusF1 / (scale.f1Max - scale.f1Min)) * (HEIGHT - PAD * 2)}
-                style={{ stroke: token.color, fill: token.color }}
+                r={10}
+                style={{ stroke: token.color }}
               />
-              <text className="reference-label" x={x(f2)} y={y(f1) + 4} textAnchor="middle">
+              <text className="reference-label" x={x(f2) + 14} y={y(f1) + 5}>
                 {token.ipa}
               </text>
             </g>

@@ -3,7 +3,7 @@
   "version": "2026.06.v3",
   "language": "American English",
   "languageCode": "en-US",
-  "description": "General American teaching word list for stressed vowel-space plotting. The low-back vowels vary regionally, so reference regions are pedagogical anchors rather than universal targets.",
+  "description": "General American teaching word list for stressed vowel-space plotting. The low-back vowels vary regionally, so reference points are pedagogical anchors rather than universal targets.",
   "referenceSets": [
     {
       "id": "american",
@@ -26,9 +26,7 @@
       "references": {
         "american": {
           "f1": 300,
-          "f2": 2500,
-          "radiusF1": 80,
-          "radiusF2": 260
+          "f2": 2500
         }
       }
     },
@@ -47,9 +45,7 @@
       "references": {
         "american": {
           "f1": 430,
-          "f2": 2100,
-          "radiusF1": 90,
-          "radiusF2": 250
+          "f2": 2100
         }
       }
     },
@@ -68,9 +64,7 @@
       "references": {
         "american": {
           "f1": 610,
-          "f2": 1900,
-          "radiusF1": 110,
-          "radiusF2": 260
+          "f2": 1900
         }
       }
     },
@@ -89,9 +83,7 @@
       "references": {
         "american": {
           "f1": 860,
-          "f2": 1800,
-          "radiusF1": 140,
-          "radiusF2": 300
+          "f2": 1800
         }
       }
     },
@@ -110,9 +102,7 @@
       "references": {
         "american": {
           "f1": 730,
-          "f2": 1100,
-          "radiusF1": 130,
-          "radiusF2": 260
+          "f2": 1100
         }
       }
     },
@@ -131,9 +121,7 @@
       "references": {
         "american": {
           "f1": 570,
-          "f2": 900,
-          "radiusF1": 120,
-          "radiusF2": 220
+          "f2": 900
         }
       }
     },
@@ -152,9 +140,7 @@
       "references": {
         "american": {
           "f1": 460,
-          "f2": 1100,
-          "radiusF1": 90,
-          "radiusF2": 230
+          "f2": 1100
         }
       }
     },
@@ -173,9 +159,7 @@
       "references": {
         "american": {
           "f1": 350,
-          "f2": 900,
-          "radiusF1": 80,
-          "radiusF2": 230
+          "f2": 900
         }
       }
     },
@@ -194,9 +178,7 @@
       "references": {
         "american": {
           "f1": 640,
-          "f2": 1200,
-          "radiusF1": 120,
-          "radiusF2": 260
+          "f2": 1200
         }
       }
     },
@@ -215,9 +197,7 @@
       "references": {
         "american": {
           "f1": 500,
-          "f2": 1500,
-          "radiusF1": 120,
-          "radiusF2": 260
+          "f2": 1500
         }
       }
     }

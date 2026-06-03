@@ -11,7 +11,7 @@
 ## 2026-06-03 V2
 
 - Added English reference-set switching for American and British accent anchors.
-- Added Hz/Bark display conversion for chart axes, reference regions, recorded values, and CSV export.
+- Added Hz/Bark display conversion for chart axes, reference points, recorded values, and CSV export.
 - Removed the English diphthong token `hayed`.
 - Added a recorded-speaker vowel-space polygon that connects measured points in corpus order.
 - Added a Japanese five-vowel corpus and a language switch between English and Japanese.
@@ -41,3 +41,10 @@
 - American English keeps a General American teaching set including LOT-PALM and r-colored NURSE anchors.
 - British English uses a Standard Southern British / RP-style stressed monophthong set that keeps LOT, BATH-PALM-START, THOUGHT, and NURSE as distinct anchors.
 - Speaker polygon now waits until every token in the selected corpus has a measured point, then connects the points by geometric angle around their center instead of corpus order.
+
+## 2026-06-03 Reference Data Review
+
+- Public formant datasets exist for parts of the current demo scope: Hillenbrand et al. 1995 for American English `hVd` vowels, Deterding 1997 for Standard Southern British monophthongs, and Mokhtari and Tanaka 2000 for Japanese vowels.
+- These datasets differ in accent coverage, speaker grouping, word lists, measurement method, and available distribution metadata, so the v1 chart should not show one comparable set of target ellipses across all corpora.
+- Removed the hand-tuned `radiusF1` and `radiusF2` fields from corpus JSON and changed the chart to show reference center points only.
+- README now documents the source lineage and the reason reference ellipses are intentionally omitted.

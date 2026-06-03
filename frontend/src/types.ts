@@ -4,11 +4,9 @@ export type AnalysisHints = {
   timeStep: number;
 };
 
-export type ReferenceRegion = {
+export type ReferencePoint = {
   f1: number;
   f2: number;
-  radiusF1: number;
-  radiusF2: number;
 };
 
 export type ReferenceSet = {
@@ -24,7 +22,7 @@ export type CorpusToken = {
   ipa: string;
   color: string;
   analysis: AnalysisHints;
-  references: Record<string, ReferenceRegion>;
+  references: Record<string, ReferencePoint>;
 };
 
 export type Corpus = {

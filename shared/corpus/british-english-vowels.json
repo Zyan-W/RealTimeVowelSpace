@@ -3,7 +3,7 @@
   "version": "2026.06.v3",
   "language": "British English",
   "languageCode": "en-GB",
-  "description": "Standard Southern British / RP teaching word list for stressed monophthong vowel-space plotting. Reference regions are pedagogical anchors rather than universal targets.",
+  "description": "Standard Southern British / RP teaching word list for stressed monophthong vowel-space plotting. Reference points are pedagogical anchors rather than universal targets.",
   "referenceSets": [
     {
       "id": "british",
@@ -26,9 +26,7 @@
       "references": {
         "british": {
           "f1": 292,
-          "f2": 2452,
-          "radiusF1": 90,
-          "radiusF2": 300
+          "f2": 2452
         }
       }
     },
@@ -47,9 +45,7 @@
       "references": {
         "british": {
           "f1": 376,
-          "f2": 1966,
-          "radiusF1": 100,
-          "radiusF2": 280
+          "f2": 1966
         }
       }
     },
@@ -68,9 +64,7 @@
       "references": {
         "british": {
           "f1": 607,
-          "f2": 1857,
-          "radiusF1": 140,
-          "radiusF2": 300
+          "f2": 1857
         }
       }
     },
@@ -89,9 +83,7 @@
       "references": {
         "british": {
           "f1": 854,
-          "f2": 1675,
-          "radiusF1": 150,
-          "radiusF2": 320
+          "f2": 1675
         }
       }
     },
@@ -110,9 +102,7 @@
       "references": {
         "british": {
           "f1": 778,
-          "f2": 1236,
-          "radiusF1": 150,
-          "radiusF2": 270
+          "f2": 1236
         }
       }
     },
@@ -131,9 +121,7 @@
       "references": {
         "british": {
           "f1": 655,
-          "f2": 1131,
-          "radiusF1": 130,
-          "radiusF2": 260
+          "f2": 1131
         }
       }
     },
@@ -152,9 +140,7 @@
       "references": {
         "british": {
           "f1": 402,
-          "f2": 858,
-          "radiusF1": 120,
-          "radiusF2": 240
+          "f2": 858
         }
       }
     },
@@ -173,9 +159,7 @@
       "references": {
         "british": {
           "f1": 395,
-          "f2": 1257,
-          "radiusF1": 100,
-          "radiusF2": 260
+          "f2": 1257
         }
       }
     },
@@ -194,9 +178,7 @@
       "references": {
         "british": {
           "f1": 322,
-          "f2": 1314,
-          "radiusF1": 90,
-          "radiusF2": 280
+          "f2": 1314
         }
       }
     },
@@ -215,9 +197,7 @@
       "references": {
         "british": {
           "f1": 779,
-          "f2": 1359,
-          "radiusF1": 150,
-          "radiusF2": 300
+          "f2": 1359
         }
       }
     },
@@ -236,9 +216,7 @@
       "references": {
         "british": {
           "f1": 542,
-          "f2": 1566,
-          "radiusF1": 130,
-          "radiusF2": 300
+          "f2": 1566
         }
       }
     }
