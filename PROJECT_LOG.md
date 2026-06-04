@@ -4,7 +4,7 @@
 
 - Repository started empty and was not a Git repository.
 - Product direction: public web teaching demo, English word-list task, record one token then analyze immediately.
-- Technical direction: React/Vite frontend records WAV in-browser; FastAPI backend uses Praat/Parselmouth and discards uploaded audio after analysis.
+- Original technical direction: React/Vite frontend records WAV in-browser; FastAPI backend used Praat/Parselmouth and discarded uploaded audio after analysis. This was superseded on 2026-06-04 by a project-owned NumPy/LPC analyzer to fit the Apache-2.0 release policy.
 - Privacy default: no server-side retention of audio or session results.
 - V1 analysis approach: trim silence, choose a stable central voiced/energy window, calculate median formants, return warnings for low-quality input.
 
@@ -75,3 +75,21 @@
 - Added Windows and macOS prerequisite checks before the shared Python bootstrap runs.
 - Windows can offer an explicit `winget` install for missing Python 3.12 and Node.js LTS; macOS can offer an explicit Homebrew install when Homebrew is already available.
 - Clarified the README distinction between system runtimes and project dependency packages.
+
+## 2026-06-04 Source and License Review
+
+- Reviewed tracked application code for copied-project risk: backend, frontend, launch scripts, tests, and reference-data generator are short project-specific implementations using public APIs and generic algorithms rather than copied source from a specific open-source project.
+- Confirmed generated corpus JSON stores source identifiers and method metadata for the normalized reference ellipses; raw downloaded reference data remains in ignored `.tmp_data/` cache and is not tracked.
+- Added bilingual README sections documenting code origin, public data sources, direct Python and Node.js dependency licenses, and the current frontend transitive license set.
+- Initial review found `praat-parselmouth` was GPLv3, which conflicted with the intended Apache-2.0 release policy.
+- Verification after the README/log update: backend pytest passed, frontend Vitest passed when run directly through `node.exe`, TypeScript build passed, and Vite production build passed when run directly through `node.exe`.
+
+## 2026-06-04 Apache-2.0 Release Audit
+
+- New release rule: publish the project under Apache License 2.0, avoid GPL/AGPL/SSPL/BUSL/unclear-license dependencies unless explicitly approved, and maintain `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, and `AI_USAGE.md`.
+- Affected current code: `backend/app/analyzer.py` no longer calls Praat/Parselmouth. It now uses a short project-owned WAV reader plus NumPy-based LPC formant estimation. This removes the GPLv3 runtime dependency but can change measured F1/F2/F3 values compared with the previous Praat-backed path.
+- Removed `praat-parselmouth` from `backend/requirements.txt`.
+- Added Apache-2.0 `LICENSE`, a minimal `NOTICE`, third-party dependency/data-source notices, and an AI usage policy.
+- Remaining release-review note: the Japanese reference source is public research data but does not declare an SPDX license on its source page; generated reference values remain in the corpus JSON and need explicit owner approval or replacement if applying a strict data-license policy.
+- Verification after removing the GPL dependency: local `praat-parselmouth` was uninstalled from `backend/.venv`, backend pytest passed, source/manifests had no `parselmouth`/disallowed-license matches outside explanatory docs, frontend Vitest passed, TypeScript build passed, and Vite production build passed.
+- Added a top-level README license section so GitHub readers can immediately see the Apache-2.0 license file and related notice documents.

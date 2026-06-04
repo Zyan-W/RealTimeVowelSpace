@@ -1,8 +1,9 @@
+# SPDX-License-Identifier: Apache-2.0
 from __future__ import annotations
 
+import io
 import math
-import os
-import tempfile
+import wave
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -25,53 +26,31 @@ class StableWindow:
 
 
 def analyze_audio_bytes(audio: bytes, filename: str, content_type: str, token: CorpusToken) -> AnalyzeResponse:
-    suffix = _safe_suffix(filename, content_type)
-    temp_path = None
-    try:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as handle:
-            handle.write(audio)
-            temp_path = Path(handle.name)
-        return analyze_audio_file(temp_path, token)
-    finally:
-        if temp_path and temp_path.exists():
-            temp_path.unlink(missing_ok=True)
+    del filename, content_type
+    return _analyze_wav(io.BytesIO(audio), token)
 
 
 def analyze_audio_file(path: Path, token: CorpusToken) -> AnalyzeResponse:
-    try:
-        import parselmouth
-    except ImportError as exc:
-        raise AnalysisError("Praat/Parselmouth is not installed on the backend.") from exc
+    return _analyze_wav(path, token)
 
-    try:
-        sound = parselmouth.Sound(str(path))
-    except Exception as exc:
-        raise AnalysisError("Could not read this audio file. Please send a WAV recording.") from exc
 
-    duration = float(sound.get_total_duration())
+def _analyze_wav(source: Path | io.BytesIO, token: CorpusToken) -> AnalyzeResponse:
+    mono, sample_rate = _read_wav(source)
+    duration = len(mono) / sample_rate
     if duration < 0.12:
         raise AnalysisError("Recording is too short for vowel measurement.")
 
-    samples = np.asarray(sound.values, dtype=float)
-    if samples.ndim == 2:
-        mono = samples.mean(axis=0)
-    else:
-        mono = samples
-
-    sample_rate = float(sound.sampling_frequency)
     stable = _find_stable_window(mono, sample_rate, duration, token.analysis.windowMs / 1000)
-    formant = sound.to_formant_burg(
-        time_step=token.analysis.timeStep,
-        max_number_of_formants=5,
-        maximum_formant=token.analysis.maxFormantHz,
-        window_length=0.025,
-        pre_emphasis_from=50,
-    )
+    analysis_samples, analysis_rate = _resample_for_lpc(mono, sample_rate, token.analysis.maxFormantHz)
 
     times = np.linspace(stable.start, stable.end, num=9)
-    f1_values = _collect_formant_values(formant, 1, times)
-    f2_values = _collect_formant_values(formant, 2, times)
-    f3_values = _collect_formant_values(formant, 3, times)
+    formant_sets = [
+        _estimate_formants(analysis_samples, analysis_rate, float(time), token.analysis.maxFormantHz)
+        for time in times
+    ]
+    f1_values = [formants[0] for formants in formant_sets if len(formants) > 0]
+    f2_values = [formants[1] for formants in formant_sets if len(formants) > 1]
+    f3_values = [formants[2] for formants in formant_sets if len(formants) > 2]
 
     warnings = list(stable.warnings)
     clipped_ratio = float(np.mean(np.abs(mono) >= 0.98)) if mono.size else 0
@@ -83,7 +62,7 @@ def analyze_audio_file(path: Path, token: CorpusToken) -> AnalyzeResponse:
     f3 = _median_or_none(f3_values)
 
     if f1 is None or f2 is None:
-        raise AnalysisError("Praat could not estimate stable F1/F2 values for this token.")
+        raise AnalysisError("Could not estimate stable F1/F2 values for this token.")
 
     confidence = stable.confidence
     if warnings:
@@ -105,6 +84,40 @@ def analyze_audio_file(path: Path, token: CorpusToken) -> AnalyzeResponse:
             midpoint=round(stable.midpoint, 3),
         ),
     )
+
+
+def _read_wav(source: Path | io.BytesIO) -> tuple[np.ndarray, int]:
+    try:
+        wave_source = str(source) if isinstance(source, Path) else source
+        with wave.open(wave_source, "rb") as handle:
+            if handle.getcomptype() != "NONE":
+                raise AnalysisError("Compressed WAV files are not supported.")
+            channels = handle.getnchannels()
+            sample_width = handle.getsampwidth()
+            sample_rate = handle.getframerate()
+            frames = handle.readframes(handle.getnframes())
+    except (EOFError, OSError, wave.Error) as exc:
+        raise AnalysisError("Could not read this audio file. Please send a WAV recording.") from exc
+
+    samples = _pcm_to_float(frames, sample_width)
+    if channels > 1:
+        samples = samples.reshape(-1, channels).mean(axis=1)
+    return samples.astype(float), sample_rate
+
+
+def _pcm_to_float(data: bytes, sample_width: int) -> np.ndarray:
+    if sample_width == 1:
+        return (np.frombuffer(data, dtype=np.uint8).astype(float) - 128) / 128
+    if sample_width == 2:
+        return np.frombuffer(data, dtype="<i2").astype(float) / 32768
+    if sample_width == 3:
+        raw = np.frombuffer(data, dtype=np.uint8).reshape(-1, 3).astype(np.int32)
+        values = raw[:, 0] | (raw[:, 1] << 8) | (raw[:, 2] << 16)
+        values = np.where(values & 0x800000, values - 0x1000000, values)
+        return values.astype(float) / 8388608
+    if sample_width == 4:
+        return np.frombuffer(data, dtype="<i4").astype(float) / 2147483648
+    raise AnalysisError("Unsupported WAV sample width.")
 
 
 def _find_stable_window(samples: np.ndarray, sample_rate: float, duration: float, window_seconds: float) -> StableWindow:
@@ -163,13 +176,63 @@ def _find_stable_window(samples: np.ndarray, sample_rate: float, duration: float
     return StableWindow(start=start, end=end, midpoint=midpoint, confidence=confidence, warnings=warnings)
 
 
-def _collect_formant_values(formant, formant_number: int, times: np.ndarray) -> list[float]:
-    values: list[float] = []
-    for time in times:
-        value = formant.get_value_at_time(formant_number, float(time))
-        if value is not None and math.isfinite(value) and value > 0:
-            values.append(float(value))
-    return values
+def _resample_for_lpc(samples: np.ndarray, sample_rate: float, max_formant_hz: int) -> tuple[np.ndarray, float]:
+    target_rate = max(12000, min(16000, int(max_formant_hz * 2.8)))
+    if sample_rate <= target_rate:
+        return samples, sample_rate
+    duration = len(samples) / sample_rate
+    old_times = np.linspace(0, duration, num=len(samples), endpoint=False)
+    new_count = max(1, int(duration * target_rate))
+    new_times = np.linspace(0, duration, num=new_count, endpoint=False)
+    return np.interp(new_times, old_times, samples).astype(float), float(target_rate)
+
+
+def _estimate_formants(samples: np.ndarray, sample_rate: float, time: float, max_formant_hz: int) -> list[float]:
+    half_length = int(sample_rate * 0.015)
+    center = int(time * sample_rate)
+    start = max(0, center - half_length)
+    end = min(len(samples), center + half_length)
+    frame = samples[start:end].astype(float)
+    if frame.size < sample_rate * 0.018:
+        return []
+
+    frame = frame - float(np.mean(frame))
+    if float(np.sqrt(np.mean(frame * frame))) < 0.0001:
+        return []
+    frame[1:] = frame[1:] - 0.97 * frame[:-1]
+    frame *= np.hamming(frame.size)
+
+    order = max(8, min(22, int(sample_rate / 1000) + 2))
+    coeffs = _lpc_coefficients(frame, order)
+    roots = np.roots(coeffs)
+    candidates: list[tuple[float, float]] = []
+    for root in roots:
+        if np.imag(root) <= 0 or not 0 < abs(root) < 1:
+            continue
+        frequency = abs(math.atan2(np.imag(root), np.real(root))) * sample_rate / (2 * math.pi)
+        bandwidth = -sample_rate * math.log(abs(root)) / math.pi
+        if 150 <= frequency <= max_formant_hz and bandwidth <= 900:
+            candidates.append((float(frequency), float(bandwidth)))
+    return [frequency for frequency, _bandwidth in sorted(candidates)[:3]]
+
+
+def _lpc_coefficients(frame: np.ndarray, order: int) -> np.ndarray:
+    autocorr = np.correlate(frame, frame, mode="full")[frame.size - 1 : frame.size + order]
+    if autocorr[0] <= 1e-9:
+        return np.array([1.0])
+
+    coeffs = np.zeros(order + 1)
+    coeffs[0] = 1.0
+    error = float(autocorr[0])
+    for index in range(1, order + 1):
+        reflection = -float(autocorr[index] + np.dot(coeffs[1:index], autocorr[index - 1 : 0 : -1])) / error
+        next_coeffs = coeffs.copy()
+        for inner in range(1, index):
+            next_coeffs[inner] = coeffs[inner] + reflection * coeffs[index - inner]
+        next_coeffs[index] = reflection
+        coeffs = next_coeffs
+        error *= max(1e-9, 1 - reflection * reflection)
+    return coeffs
 
 
 def _median_or_none(values: list[float]) -> float | None:
@@ -185,12 +248,3 @@ def _coefficient_of_variation(values: np.ndarray) -> float:
     if mean <= 0:
         return 0
     return float(np.std(values) / mean)
-
-
-def _safe_suffix(filename: str, content_type: str) -> str:
-    suffix = Path(filename).suffix.lower()
-    if suffix in {".wav", ".wave", ".aiff", ".aif", ".flac"}:
-        return suffix
-    if content_type in {"audio/wav", "audio/wave", "audio/x-wav"}:
-        return ".wav"
-    return ".wav"

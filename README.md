@@ -1,5 +1,14 @@
 # RealTimeVowelSpace
 
+## License / ライセンス
+
+This project is licensed under the Apache License 2.0. See `LICENSE`.
+Third-party dependency and data-source notes are listed in `THIRD_PARTY_NOTICES.md`.
+AI-assisted development notes are listed in `AI_USAGE.md`.
+
+このプロジェクトは Apache License 2.0 で公開されています。詳細は `LICENSE` を参照してください。
+第三者ライブラリとデータソースの情報は `THIRD_PARTY_NOTICES.md` に、AI 支援開発に関する情報は `AI_USAGE.md` に記載しています。
+
 ## 日本語
 
 RealTimeVowelSpace は、母音空間を授業・デモ用に可視化するための Web ツールです。ブラウザで単語または仮名を 1 つずつ読み上げると、録音された音声から F1/F2/F3 を抽出し、結果をすぐに母音図に表示します。
@@ -18,11 +27,49 @@ RealTimeVowelSpace は、母音空間を授業・デモ用に可視化するた�
 
 フロントエンドは React/Vite で作られています。ブラウザ上でマイク録音を行い、WAV 音声を backend API に送信します。
 
-バックエンドは FastAPI と Praat/Parselmouth を使っています。音声全体からエネルギーの高い有声区間を探し、その中央付近の短い安定窓で複数の時点からフォルマントを取得します。現在の測定値は、その窓内の F1/F2/F3 値の中央値です。
+バックエンドは FastAPI と NumPy を使っています。音声全体からエネルギーの高い有声区間を探し、その中央付近の短い安定窓で、プロジェクト内の短い WAV 読み込み・LPC 実装により F1/F2/F3 を推定します。現在の測定値は、その窓内の複数時点の中央値です。これは教育・デモ用の推定であり、Praat などの専門ツールと完全に同じ測定値になることは保証しません。
 
 参照楕円は手作業で描いたものではありません。Hillenbrand et al. 1995、Deterding 1997、Mokhtari and Tanaka 2000 などの公開データをもとに、話者ごとの Lobanov z-score 正規化を行い、各母音の 68% F1/F2 共分散楕円として生成しています。
 
 このツールは教育・デモ用です。研究発表用の厳密な音響分析を完全に置き換えるものではありません。
+
+### コード・データソースとライセンス
+
+このリポジトリ内のアプリケーションコードは、このプロジェクト用に書いた短い実装です。特定のオープンソースプロジェクト、ブログ、Stack Overflow、論文からソースコードをコピーしたものではありません。実装は Web Audio API、Fetch API、FastAPI などの公開 API と、WAV ヘッダー生成、CSV エスケープ、エネルギー窓選択、中央値、LPC、Lobanov 正規化、共分散楕円、Bark 変換などの一般的なアルゴリズム・数式に基づいています。
+
+参照母音データは `scripts/generate_reference_ellipses.py` で公開データから生成しています。元の生データやダウンロードキャッシュはリポジトリには含めていません。
+
+| 用途 | ソース | ライセンス・利用条件 |
+| --- | --- | --- |
+| American English reference | Hillenbrand et al. 1995 data via CRAN [`phonTools` `h95`](https://cran.r-project.org/package=phonTools) | `phonTools` is BSD_2_clause + file LICENSE |
+| British English reference | [David Deterding 1997 JIPA vowel measurements](https://fass.ubd.edu.bn/data/JIPA-vowels/index.htm) | Source page says the measurements may be used in any useful way; no SPDX software license is declared |
+| Japanese reference | [Mokhtari and Tanaka 2000 ETL Japanese vowel formant data](https://isd.pu-toyama.ac.jp/~parham/sp_FormantDataETL.html) | Publicly available research data; no SPDX software license is declared on the source page |
+
+Japanese reference の派生値は現在も corpus JSON に含まれています。厳密に license が明示されたデータだけを使う方針にする場合、このデータ源は公開前に明示的に承認するか、別のデータ源に置き換える必要があります。
+
+直接使用している Python ライブラリ:
+
+| ライブラリ | 用途 | ライセンス |
+| --- | --- | --- |
+| FastAPI | backend API | MIT |
+| Uvicorn | ASGI server | BSD-3-Clause |
+| python-multipart | upload form parsing | Apache-2.0 |
+| NumPy | numerical arrays and statistics | BSD-3-Clause; binary wheels may bundle additional compatible runtime libraries |
+| pytest | backend tests | MIT |
+| HTTPX | tests and reference-data download script | BSD-3-Clause |
+| pandas, rdata, xlrd | optional reference-data regeneration only | BSD-3-Clause / MIT / BSD-style |
+
+直接使用している Node.js ライブラリ:
+
+| ライブラリ | 用途 | ライセンス |
+| --- | --- | --- |
+| React, React DOM | frontend UI | MIT |
+| Vite, @vitejs/plugin-react | dev server and build | MIT |
+| TypeScript | frontend type checking | Apache-2.0 |
+| lucide-react | button icons | ISC |
+| Vitest, jsdom, Testing Library packages, React type packages | frontend tests | MIT |
+
+`frontend/package-lock.json` に含まれる現在の伝播依存の license 集合は Apache-2.0、BSD-2-Clause、BSD-3-Clause、BlueOak-1.0.0、CC-BY-4.0、CC0-1.0、ISC、MIT、MIT-0 です。このプロジェクト自身のコードは Apache License 2.0 で公開する想定で、`LICENSE`、`NOTICE`、`THIRD_PARTY_NOTICES.md`、`AI_USAGE.md` を同梱しています。以前の GPLv3 runtime dependency である `praat-parselmouth` は削除済みです。
 
 ### GitHub からダウンロードする方法
 
@@ -101,11 +148,49 @@ RealTimeVowelSpace is a web-based teaching tool for visualizing vowel space. Use
 
 The frontend is built with React/Vite. It records microphone audio in the browser and sends a WAV clip to the backend API.
 
-The backend is built with FastAPI and Praat/Parselmouth. It finds a high-energy voiced region in the recording, selects a short stable window around the center of that region, samples formants at multiple time points, and returns the median F1/F2/F3 values from that window.
+The backend is built with FastAPI and NumPy. It finds a high-energy voiced region in the recording, selects a short stable window around the center of that region, and estimates F1/F2/F3 with a short project-owned WAV reader and LPC implementation. The returned measurement is the median across several time points in that window. This is a teaching/demo estimate and is not guaranteed to match specialist tools such as Praat exactly.
 
 The reference ellipses are not hand-drawn. They are generated from public formant datasets, including Hillenbrand et al. 1995, Deterding 1997, and Mokhtari and Tanaka 2000. The generator applies speaker-level Lobanov z-score normalization and calculates a 68% F1/F2 covariance ellipse for each vowel.
 
 This tool is intended for teaching and demonstration. It is not a full replacement for publication-grade acoustic analysis.
+
+### Code, Data Sources, and Licenses
+
+The application code in this repository was written for this project as short, generic implementation code. It does not copy source code from a specific open-source project, blog, Stack Overflow answer, or paper. The implementation uses public API documentation for Web Audio API, Fetch API, FastAPI, and general algorithms or formulas such as WAV header writing, CSV escaping, energy-window selection, medians, LPC, Lobanov normalization, covariance ellipses, and Bark conversion.
+
+Reference vowel data is generated from public data sources by `scripts/generate_reference_ellipses.py`. Raw source data and download caches are not included in the repository.
+
+| Purpose | Source | License or use statement |
+| --- | --- | --- |
+| American English reference | Hillenbrand et al. 1995 data via CRAN [`phonTools` `h95`](https://cran.r-project.org/package=phonTools) | `phonTools` is BSD_2_clause + file LICENSE |
+| British English reference | [David Deterding 1997 JIPA vowel measurements](https://fass.ubd.edu.bn/data/JIPA-vowels/index.htm) | Source page says the measurements may be used in any useful way; no SPDX software license is declared |
+| Japanese reference | [Mokhtari and Tanaka 2000 ETL Japanese vowel formant data](https://isd.pu-toyama.ac.jp/~parham/sp_FormantDataETL.html) | Publicly available research data; no SPDX software license is declared on the source page |
+
+Derived Japanese reference values are still present in the corpus JSON files. If the release policy requires only explicitly licensed data, this source needs explicit owner approval before release or replacement with another data source.
+
+Direct Python libraries:
+
+| Library | Used for | License |
+| --- | --- | --- |
+| FastAPI | backend API | MIT |
+| Uvicorn | ASGI server | BSD-3-Clause |
+| python-multipart | upload form parsing | Apache-2.0 |
+| NumPy | numerical arrays and statistics | BSD-3-Clause; binary wheels may bundle additional compatible runtime libraries |
+| pytest | backend tests | MIT |
+| HTTPX | tests and reference-data download script | BSD-3-Clause |
+| pandas, rdata, xlrd | optional reference-data regeneration only | BSD-3-Clause / MIT / BSD-style |
+
+Direct Node.js libraries:
+
+| Library | Used for | License |
+| --- | --- | --- |
+| React, React DOM | frontend UI | MIT |
+| Vite, @vitejs/plugin-react | dev server and build | MIT |
+| TypeScript | frontend type checking | Apache-2.0 |
+| lucide-react | button icons | ISC |
+| Vitest, jsdom, Testing Library packages, React type packages | frontend tests | MIT |
+
+The current license set among transitive packages in `frontend/package-lock.json` is Apache-2.0, BSD-2-Clause, BSD-3-Clause, BlueOak-1.0.0, CC-BY-4.0, CC0-1.0, ISC, MIT, and MIT-0. This project's own code is intended for release under the Apache License 2.0, and the repository includes `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, and `AI_USAGE.md`. The previous GPLv3 runtime dependency `praat-parselmouth` has been removed.
 
 ### Download From GitHub
 

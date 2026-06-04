@@ -11,7 +11,7 @@ from .models import AnalyzeResponse, Corpus
 app = FastAPI(
     title="RealTimeVowelSpace API",
     version="1.0.0",
-    description="Praat-backed vowel formant extraction for a teaching demo.",
+    description="Project-owned vowel formant estimation for a teaching demo.",
 )
 
 app.add_middleware(
