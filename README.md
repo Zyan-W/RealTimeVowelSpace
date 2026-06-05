@@ -4,9 +4,10 @@
 
 This project is licensed under the Apache License 2.0. See `LICENSE`.
 Third-party dependency and data-source notes are listed in `THIRD_PARTY_NOTICES.md`.
+AI-assisted development notes are listed in `AI_USAGE.md`.
 
 このプロジェクトは Apache License 2.0 で公開されています。詳細は `LICENSE` を参照してください。
-第三者ライブラリとデータソースの情報は `THIRD_PARTY_NOTICES.md` に記載しています。
+第三者ライブラリとデータソースの情報は `THIRD_PARTY_NOTICES.md` に、AI 支援開発に関する情報は `AI_USAGE.md` に記載しています。
 
 ## 日本語
 
@@ -68,7 +69,7 @@ Japanese reference の派生値は現在も corpus JSON に含まれています
 | lucide-react | button icons | ISC |
 | Vitest, jsdom, Testing Library packages, React type packages | frontend tests | MIT |
 
-`frontend/package-lock.json` に含まれる現在の伝播依存の license 集合は Apache-2.0、BSD-2-Clause、BSD-3-Clause、BlueOak-1.0.0、CC-BY-4.0、CC0-1.0、ISC、MIT、MIT-0 です。このプロジェクト自身のコードは Apache License 2.0 で公開する想定で、`LICENSE`、`NOTICE`、`THIRD_PARTY_NOTICES.md` を同梱しています。以前の GPLv3 runtime dependency である `praat-parselmouth` は削除済みです。
+`frontend/package-lock.json` に含まれる現在の伝播依存の license 集合は Apache-2.0、BSD-2-Clause、BSD-3-Clause、BlueOak-1.0.0、CC-BY-4.0、CC0-1.0、ISC、MIT、MIT-0 です。このプロジェクト自身のコードは Apache License 2.0 で公開する想定で、`LICENSE`、`NOTICE`、`THIRD_PARTY_NOTICES.md`、`AI_USAGE.md` を同梱しています。以前の GPLv3 runtime dependency である `praat-parselmouth` は削除済みです。
 
 ### GitHub からダウンロードする方法
 
@@ -189,7 +190,7 @@ Direct Node.js libraries:
 | lucide-react | button icons | ISC |
 | Vitest, jsdom, Testing Library packages, React type packages | frontend tests | MIT |
 
-The current license set among transitive packages in `frontend/package-lock.json` is Apache-2.0, BSD-2-Clause, BSD-3-Clause, BlueOak-1.0.0, CC-BY-4.0, CC0-1.0, ISC, MIT, and MIT-0. This project's own code is intended for release under the Apache License 2.0, and the repository includes `LICENSE`, `NOTICE`, and `THIRD_PARTY_NOTICES.md`. The previous GPLv3 runtime dependency `praat-parselmouth` has been removed.
+The current license set among transitive packages in `frontend/package-lock.json` is Apache-2.0, BSD-2-Clause, BSD-3-Clause, BlueOak-1.0.0, CC-BY-4.0, CC0-1.0, ISC, MIT, and MIT-0. This project's own code is intended for release under the Apache License 2.0, and the repository includes `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, and `AI_USAGE.md`. The previous GPLv3 runtime dependency `praat-parselmouth` has been removed.
 
 ### Download From GitHub
 
