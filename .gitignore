@@ -1,16 +1,69 @@
+# OS and filesystem metadata
 .DS_Store
+.AppleDouble
+.LSOverride
 Thumbs.db
-.tmp_data/
-__pycache__/
+Desktop.ini
 
+# Local/private notes and AI/development logs
+PROJECT_LOG.md
+AI_USAGE.md
+PRIVATE*.md
+LOCAL*.md
+*.local.md
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# Editor and agent workspace state
+.vscode/
+.idea/
+*.code-workspace
+.codex/
+.agents/
+
+# Python environments, caches, and reports
+.venv/
+venv/
+env/
 backend/.venv/
-backend/__pycache__/
-backend/.pytest_cache/
-backend/app/__pycache__/
-backend/tests/__pycache__/
-backend/*.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.log
 
+# Node/Vite dependencies and build output
+node_modules/
 frontend/node_modules/
+dist/
 frontend/dist/
+.vite/
 frontend/.vite/
-frontend/tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Generated local data, user recordings, and exports
+.tmp_data/
+tmp/
+temp/
+.cache/
+recordings/
+exports/
+*.wav
+*.webm
+*.m4a
+*.mp3
