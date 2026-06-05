@@ -18,6 +18,7 @@ RealTimeVowelSpace は、母音空間を授業・デモ用に可視化するた�
 - American English、British English、日本語の母音課題に対応しています。
 - 各トークンを録音すると、F1/F2/F3 と分析品質スコアを表示します。
 - F1/F2 の母音図を Hz または Bark で表示できます。
+- 2D 母音図と、F1/F2/F3 から教育用に推定した 3D 声道モデルを切り替えられます。
 - 公開フォルマントデータに基づく正規化済み参照楕円を表示します。
 - 選択した語リストをすべて録音すると、話者自身の母音空間ポリゴンを描画します。
 - セッション結果を CSV として保存できます。
@@ -28,6 +29,8 @@ RealTimeVowelSpace は、母音空間を授業・デモ用に可視化するた�
 フロントエンドは React/Vite で作られています。ブラウザ上でマイク録音を行い、WAV 音声を backend API に送信します。
 
 バックエンドは FastAPI と NumPy を使っています。音声全体からエネルギーの高い有声区間を探し、その中央付近の短い安定窓で、プロジェクト内の短い WAV 読み込み・LPC 実装により F1/F2/F3 を推定します。現在の測定値は、その窓内の複数時点の中央値です。これは教育・デモ用の推定であり、Praat などの専門ツールと完全に同じ測定値になることは保証しません。
+
+3D 表示は frontend 内の Three.js/WebGL と OrbitControls で描画します。F1/F2/F3 から顎の開き、舌の高さ・前後位置、唇の丸め、声道形状の手がかりを 0..1 の範囲に正規化して、半透明の声道モデルを変形します。これは教育用の近似であり、録音者本人の解剖学的構造を復元するものではありません。backend API と CSV export は変更していません。
 
 参照楕円は手作業で描いたものではありません。Hillenbrand et al. 1995、Deterding 1997、Mokhtari and Tanaka 2000 などの公開データをもとに、話者ごとの Lobanov z-score 正規化を行い、各母音の 68% F1/F2 共分散楕円として生成しています。
 
@@ -67,6 +70,8 @@ Japanese reference の派生値は現在も corpus JSON に含まれています
 | Vite, @vitejs/plugin-react | dev server and build | MIT |
 | TypeScript | frontend type checking | Apache-2.0 |
 | lucide-react | button icons | ISC |
+| three | 3D vocal-tract visualization and orbit controls | MIT |
+| @types/three | Three.js TypeScript declarations | MIT |
 | Vitest, jsdom, Testing Library packages, React type packages | frontend tests | MIT |
 
 `frontend/package-lock.json` に含まれる現在の伝播依存の license 集合は Apache-2.0、BSD-2-Clause、BSD-3-Clause、BlueOak-1.0.0、CC-BY-4.0、CC0-1.0、ISC、MIT、MIT-0 です。このプロジェクト自身のコードは Apache License 2.0 で公開する想定で、`LICENSE`、`NOTICE`、`THIRD_PARTY_NOTICES.md`、`AI_USAGE.md` を同梱しています。以前の GPLv3 runtime dependency である `praat-parselmouth` は削除済みです。
@@ -123,10 +128,11 @@ bash start-dev.sh
 
 1. `American`、`British`、`Japanese` のいずれかを選びます。
 2. 必要に応じて `Hz` または `Bark` を選びます。
-3. `Record` を押して、表示された単語または仮名を読みます。
-4. `Stop` を押すと、F1/F2/F3 と母音図上の点が表示されます。
-5. リストの最後まで録音すると、話者の母音空間ポリゴンが表示されます。
-6. ダウンロードボタンで CSV を保存できます。
+3. 中央表示で `2D` または `3D` を選びます。
+4. `Record` を押して、表示された単語または仮名を読みます。
+5. `Stop` を押すと、F1/F2/F3 と母音図上の点、または教育用 3D 声道モデルが表示されます。
+6. リストの最後まで録音すると、話者の母音空間ポリゴンが表示されます。
+7. ダウンロードボタンで CSV を保存できます。
 
 ---
 
@@ -139,6 +145,7 @@ RealTimeVowelSpace is a web-based teaching tool for visualizing vowel space. Use
 - Supports American English, British English, and Japanese vowel tasks.
 - Shows F1/F2/F3 and an analysis-quality score for each recorded token.
 - Displays the F1/F2 vowel chart in either Hz or Bark.
+- Switches between the 2D vowel chart and a 3D vocal-tract teaching model derived from F1/F2/F3.
 - Shows normalized reference ellipses derived from public formant datasets.
 - Draws the speaker's own vowel-space polygon after the full selected word list has been recorded.
 - Exports the browser session as CSV.
@@ -149,6 +156,8 @@ RealTimeVowelSpace is a web-based teaching tool for visualizing vowel space. Use
 The frontend is built with React/Vite. It records microphone audio in the browser and sends a WAV clip to the backend API.
 
 The backend is built with FastAPI and NumPy. It finds a high-energy voiced region in the recording, selects a short stable window around the center of that region, and estimates F1/F2/F3 with a short project-owned WAV reader and LPC implementation. The returned measurement is the median across several time points in that window. This is a teaching/demo estimate and is not guaranteed to match specialist tools such as Praat exactly.
+
+The 3D view is rendered in the frontend with Three.js/WebGL and OrbitControls. It maps F1/F2/F3 into bounded teaching parameters for jaw opening, tongue height, tongue frontness, lip rounding, and a resonance-tube shape cue, then deforms a semi-transparent vocal-tract model. This is a pedagogical approximation, not an anatomical reconstruction of the recorded speaker. The backend API and CSV export are unchanged.
 
 The reference ellipses are not hand-drawn. They are generated from public formant datasets, including Hillenbrand et al. 1995, Deterding 1997, and Mokhtari and Tanaka 2000. The generator applies speaker-level Lobanov z-score normalization and calculates a 68% F1/F2 covariance ellipse for each vowel.
 
@@ -188,6 +197,8 @@ Direct Node.js libraries:
 | Vite, @vitejs/plugin-react | dev server and build | MIT |
 | TypeScript | frontend type checking | Apache-2.0 |
 | lucide-react | button icons | ISC |
+| three | 3D vocal-tract visualization and orbit controls | MIT |
+| @types/three | Three.js TypeScript declarations | MIT |
 | Vitest, jsdom, Testing Library packages, React type packages | frontend tests | MIT |
 
 The current license set among transitive packages in `frontend/package-lock.json` is Apache-2.0, BSD-2-Clause, BSD-3-Clause, BlueOak-1.0.0, CC-BY-4.0, CC0-1.0, ISC, MIT, and MIT-0. This project's own code is intended for release under the Apache License 2.0, and the repository includes `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, and `AI_USAGE.md`. The previous GPLv3 runtime dependency `praat-parselmouth` has been removed.
@@ -244,7 +255,8 @@ To stop the tool, press `Ctrl+C` in the terminal.
 
 1. Choose `American`, `British`, or `Japanese`.
 2. Choose `Hz` or `Bark` if needed.
-3. Click `Record` and read the displayed word or kana.
-4. Click `Stop` to show F1/F2/F3 and plot the vowel point.
-5. Continue through the list; after all tokens are recorded, the speaker vowel-space polygon appears.
-6. Use the download button to export the CSV.
+3. Choose `2D` or `3D` in the center view.
+4. Click `Record` and read the displayed word or kana.
+5. Click `Stop` to show F1/F2/F3 and either plot the vowel point or update the teaching 3D vocal-tract model.
+6. Continue through the list; after all tokens are recorded, the speaker vowel-space polygon appears.
+7. Use the download button to export the CSV.

@@ -33,12 +33,14 @@ Versions below are from `frontend/package-lock.json`.
 | lucide-react | Frontend icon components | 0.562.0 | ISC |
 | react | Frontend UI runtime | 19.2.7 | MIT |
 | react-dom | Browser rendering for React | 19.2.7 | MIT |
+| three | WebGL 3D vocal-tract visualization and orbit controls | 0.184.0 | MIT |
 | typescript | Frontend type checking | 5.9.3 | Apache-2.0 |
 | vite | Frontend dev server and production build | 7.3.5 | MIT |
 | @testing-library/react | Frontend component tests | 16.3.2 | MIT |
 | @testing-library/user-event | Frontend interaction tests | 14.6.1 | MIT |
 | @types/react | React TypeScript declarations | 19.2.16 | MIT |
 | @types/react-dom | React DOM TypeScript declarations | 19.2.3 | MIT |
+| @types/three | Three.js TypeScript declarations | 0.184.1 | MIT |
 | jsdom | DOM environment for frontend tests | 27.4.0 | MIT |
 | vitest | Frontend test runner | 4.1.8 | MIT |
 

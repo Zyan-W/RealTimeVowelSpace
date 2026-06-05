@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Download, Globe2, Mic, Play, RotateCcw, Ruler, SkipForward, Square, Users } from "lucide-react";
+import { Box, Download, Globe2, Mic, Play, RotateCcw, Ruler, SkipForward, Square, Users } from "lucide-react";
 
 import { analyzeToken, fetchCorpora } from "./api";
 import { WavRecorder } from "./audio";
@@ -11,6 +11,13 @@ import { formatFormant, unitLabel } from "./units";
 import "./styles.css";
 
 type RecordingState = "idle" | "recording" | "analyzing";
+type CenterView = "2d" | "3d";
+
+const ArticulatoryModel3D = React.lazy(() =>
+  import("./components/ArticulatoryModel3D").then((module) => ({
+    default: module.ArticulatoryModel3D
+  }))
+);
 
 function App() {
   const [corpora, setCorpora] = React.useState<Corpus[]>([]);
@@ -20,6 +27,7 @@ function App() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [results, setResults] = React.useState<ResultRow[]>([]);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [centerView, setCenterView] = React.useState<CenterView>("2d");
   const [state, setState] = React.useState<RecordingState>("idle");
   const [message, setMessage] = React.useState("Loading word list...");
   const recorderRef = React.useRef<WavRecorder | null>(null);
@@ -202,14 +210,34 @@ function App() {
           <p className={`status ${state}`}>{message}</p>
         </div>
 
-        <VowelChart
-          corpus={corpus}
-          results={results}
-          selectedId={selectedId}
-          activeReferenceId={activeReference?.id ?? ""}
-          unit={unit}
-          onSelect={setSelectedId}
-        />
+        <div className="center-stack">
+          <div className="segmented view-switch" aria-label="Visualization view">
+            <Box size={16} />
+            {(["2d", "3d"] as CenterView[]).map((view) => (
+              <button
+                key={view}
+                className={view === centerView ? "active" : ""}
+                onClick={() => setCenterView(view)}
+              >
+                {view.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          {centerView === "2d" ? (
+            <VowelChart
+              corpus={corpus}
+              results={results}
+              selectedId={selectedId}
+              activeReferenceId={activeReference?.id ?? ""}
+              unit={unit}
+              onSelect={setSelectedId}
+            />
+          ) : (
+            <React.Suspense fallback={<div className="articulatory-panel loading-panel">Loading 3D model...</div>}>
+              <ArticulatoryModel3D result={selectedResult} />
+            </React.Suspense>
+          )}
+        </div>
 
         <aside className="result-panel">
           <div className="panel-heading">

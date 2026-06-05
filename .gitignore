@@ -7,6 +7,7 @@ Desktop.ini
 
 # Local/private notes and AI/development logs
 PROJECT_LOG.md
+!project_log.md
 PRIVATE*.md
 LOCAL*.md
 *.local.md
